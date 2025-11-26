@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View, TextInput, KeyboardAvoidingView } from "react-native";
 import { useNavigation } from "@react-navigation/core";
 
 const LoginPage = () => {
@@ -7,8 +7,11 @@ const LoginPage = () => {
 
 
     return (
-        <View style={styles.container} > 
+        <KeyboardAvoidingView style={styles.container} behavior='padding'> 
             <Text style={[{ fontSize: 60 }]}>Login Page</Text>
+
+            <TextInput style={styles.input} placeholder='Email' autoCorrect={false}></TextInput>
+            <TextInput style={styles.input} placeholder='Password' autoCorrect={false}></TextInput>
 
             <View style={[{ flexDirection: 'row' }]}>
                 <TouchableOpacity style={styles.testButton} onPress={() => navigation.replace('signup')}>
@@ -19,7 +22,7 @@ const LoginPage = () => {
                     <Text style={styles.testText}>Go to Avatar</Text>
                 </TouchableOpacity>
             </View>
-        </View>
+        </KeyboardAvoidingView>
     )
 }
 
@@ -41,6 +44,14 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 30,
     },
+
+    input: {
+        padding: 5,
+        borderRadius: 50,
+        borderWidth: 3,
+        borderColor: 'green',
+        margin: 5,
+    }
 })
 
 export default LoginPage;
