@@ -6,7 +6,6 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LoginPage from "./Screens/Authenticate/LoginPage";
 import SignUpPage from "./Screens/Authenticate/SignUpPage";
 import AvatarPage from "./Screens/MainScreens/AvatarPage";
-import DailyEntry from "./Screens/MainScreens/DailyEntry";
 
 // eslint-disable-next-line import/no-unresolved
 import EntryList from "./Screens/MainScreens/EntryList";
@@ -23,8 +22,7 @@ export default function App() {
         <Stack.Screen name='signup' component={SignUpPage} ></Stack.Screen>
 
         <Stack.Screen name='avatarpage' component={AvatarPage} ></Stack.Screen>
-        <Stack.Screen name='dailyentry' component={DailyEntry} ></Stack.Screen>
-        <Stack.Screen name='entrylist' component={EntryList} ></Stack.Screen>
+        <Stack.Screen name='entrylist' component={EntryList} options={{ animation: 'slide_from_left' }}></Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
   );
