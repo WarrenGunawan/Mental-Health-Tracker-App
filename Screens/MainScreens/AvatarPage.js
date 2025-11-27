@@ -1,5 +1,8 @@
-import { StyleSheet, Text, TouchableOpacity, View, ScrollView } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View,  } from "react-native";
+import { useState } from 'react';
 import { useNavigation } from "@react-navigation/core";
+
+import { LinearGradient } from 'expo-linear-gradient';
 
 import Entypo from '@expo/vector-icons/Entypo';
 
@@ -25,22 +28,27 @@ const AvatarPage = () => {
     const formattedDate = `${month} ${date}`;
 
 
+    const[entryQuestions, setEntryQuestions] = useState(false);
+
+
     return (
         <View style={styles.container} > 
+        <Text style={{ fontSize: 20, position: 'absolute', top: '45' }}>{formattedDate}</Text>
             <View style={styles.topContainer}>
-                <TouchableOpacity>
-                    <Text>Entry List</Text>
+                <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => navigation.replace('entrylist')}>
+                    <Entypo name="chevron-left" size={18} />
+                    <Text style={{ fontSize: 15}}>Entry List</Text>
                 </TouchableOpacity>
 
-                <Text style={{ fontSize: 20 }}>{formattedDate}</Text>
-
-                 <TouchableOpacity>
-                    <Text>Options</Text>
+                <TouchableOpacity>
+                    <Text style={{ fontSize: 15 }}>Options</Text>
                 </TouchableOpacity>
 
             </View>
 
-            <View style={{ color: 'black', width: '100%', borderWidth: 5 }}/>
+            {/* <View style={{ color: 'black', width: '100%', borderWidth: 1 }}/> */}
+
+            <LinearGradient colors={['rgba(0,0,0,0.35)', 'transparent']} start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }} style={{ height: 5, width: '100%' }} />
 
             <View style={styles.avatarContainer}>
                 <View style={{ flexDirection: 'row', columnGap: 2, marginLeft: -5 }}>
@@ -57,9 +65,9 @@ const AvatarPage = () => {
                     ))}
                 </View>
             </View>
-            <Entypo name="github" size={300}/>
+            <Entypo name="github" size={300} style={{ marginTop: -30}}/>
 
-            <View style={{ flexDirection: 'row', columnGap: 2, width: '100%', justifyContent: 'center', marginTop: -20, marginBottom: -20  }}>
+            <View style={{ flexDirection: 'row', columnGap: 2, width: '100%', justifyContent: 'center', marginTop: -40, marginBottom: -20  }}>
                 {[...Array(30)].map((_, i) => (
                     <Text key={i} style={{ fontSize: 70 }}>•</Text>
                 ))}
@@ -69,15 +77,27 @@ const AvatarPage = () => {
 
 
             <View style={[{ flexDirection: 'col' }, styles.inputContainer]}>
-                <TouchableOpacity style={styles.testButton} onPress={() => navigation.replace('entrylist')}>
-                    <Text style={styles.testText}>Go to Entry List</Text>
+                <TouchableOpacity style={{ width: '100%' }} onPress={() => {setEntryQuestions(true)}}>
+                    <LinearGradient colors={['rgba(0,0,0,0.35)', 'transparent']} start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }} style={styles.dailyEntryButton}>
+                        <Text style={{ fontSize: 26, fontWeight: 'bold' }}>Daily Entry</Text>
+                    </LinearGradient>
                 </TouchableOpacity>
+            </View>
 
-                <TouchableOpacity style={styles.testButton} onPress={() => navigation.replace('login')}>
-                    <Text style={styles.testText}>Go to Login</Text>
-                </TouchableOpacity>
-            </View>        
+
+            {entryQuestions && (
+                <View style={styles.dailyEntry}>
+                    <TouchableOpacity onPress={() => {setEntryQuestions(false)}}>
+                        <Text style={{fontSize: 50, color: 'purple'}}>Poop</Text>
+                    </TouchableOpacity>
+
+                </View>
+
+            )}
+
         </View>
+
+        
     )
 }
 
@@ -87,17 +107,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'column',
         paddingTop: 40,
-    },
-
-    testButton: {
-        backgroundColor: 'black',
-        margin: 10,
-        padding: 5,
-    },
-
-    testText: {
-        color: 'white',
-        fontSize: 30,
     },
 
     avatarContainer: {
@@ -110,7 +119,7 @@ const styles = StyleSheet.create({
 
     topContainer: {
         flexDirection: 'row',
-        justifyContent: 'space-evenly',
+        justifyContent: 'space-between',
         width: '100%',
         padding: 10,
         alignItems: 'center',
@@ -118,12 +127,40 @@ const styles = StyleSheet.create({
 
     inputContainer: {
         flex: 1,
-        padding: 50,
-        borderWidth: 10,
+        padding: 20,
+        borderWidth: 2,
         borderRadius: 30,
         borderColor: 'black',
         marginVertical: 20,
+        width: '90%',
+
+        alignItems: 'center',
+        justifyContent: 'flex-end',
     },
+
+    dailyEntryButton: {
+        borderWidth: 2,
+        borderColor: 'rgba(0,0,0,0.35)',
+        borderRadius: 20,
+
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 20,
+    },
+
+    dailyEntry: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        right: 0,
+        left: 0,
+
+        backgroundColor: 'rgba(0,0,0,0.5)',
+    }
 })
 
 export default AvatarPage;
