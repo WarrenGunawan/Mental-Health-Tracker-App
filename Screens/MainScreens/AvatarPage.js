@@ -1,6 +1,6 @@
-import { StyleSheet, Text, TouchableOpacity, View,  } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View, TextInput, Button } from 'react-native';
 import { useState } from 'react';
-import { useNavigation } from "@react-navigation/core";
+import { useNavigation } from '@react-navigation/core';
 
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -16,13 +16,13 @@ const AvatarPage = () => {
 
     const lastNum = date % 10;
     if(lastNum == 1) {
-        date += "st";
+        date += 'st';
     } else if(lastNum == 2) {
-        date += "nd";
+        date += 'nd';
     } else if(lastNum == 3) {
-        date += "rd";
+        date += 'rd';
     } else {
-        date += "th";
+        date += 'th';
     }
 
     const formattedDate = `${month} ${date}`;
@@ -30,13 +30,37 @@ const AvatarPage = () => {
 
     const[entryQuestions, setEntryQuestions] = useState(false);
 
+    const moodOptions = [
+        { id: 1, color: '#0aefff', value: 1 },
+        { id: 2, color: '#deff0a', value: 3 },
+        { id: 3, color: '#ff0000', value: 5 },
+        { id: 4, color: '#0aff99', value: 2 },
+        { id: 5, color: '#ff8700', value: 4 },
+    ];
+
+    const [selectedValue, setSelectedValue] = useState(null);
+
+
+    const todayKey = () => {
+        const d = new Date();
+        const y = d.getFullYear();
+        const m = String(d.getMonth() + 1).padStart(2, "0");
+        const day = String(d.getDate()).padStart(2, "0");
+        return `${y}-${m}-${day}`; // e.g. 2025-12-31
+    };
+
+    const [lastSubmittedDate, setLastSubmittedDate] = useState(null);
+
+    const submittedToday = lastSubmittedDate === todayKey();
+    const dailyMessage = submittedToday ? "Thank you for submitting your entry" : "Please fill out your entry";
+
 
     return (
         <View style={styles.container} > 
         <Text style={{ fontSize: 20, position: 'absolute', top: '45' }}>{formattedDate}</Text>
             <View style={styles.topContainer}>
                 <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => navigation.replace('entrylist')}>
-                    <Entypo name="chevron-left" size={18} />
+                    <Entypo name='chevron-left' size={18} />
                     <Text style={{ fontSize: 15}}>Entry List</Text>
                 </TouchableOpacity>
 
@@ -65,7 +89,7 @@ const AvatarPage = () => {
                     ))}
                 </View>
             </View>
-            <Entypo name="github" size={300} style={{ marginTop: -30}}/>
+            <Entypo name='github' size={300} style={{ marginTop: -30}}/>
 
             <View style={{ flexDirection: 'row', columnGap: 2, width: '100%', justifyContent: 'center', marginTop: -40, marginBottom: -20  }}>
                 {[...Array(30)].map((_, i) => (
@@ -77,22 +101,67 @@ const AvatarPage = () => {
 
 
             <View style={[{ flexDirection: 'col' }, styles.inputContainer]}>
+                <Text style={styles.statusText}>{dailyMessage}</Text>
+
                 <TouchableOpacity style={{ width: '100%' }} onPress={() => {setEntryQuestions(true)}}>
-                    <LinearGradient colors={['rgba(0,0,0,0.35)', 'transparent']} start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }} style={styles.dailyEntryButton}>
-                        <Text style={{ fontSize: 26, fontWeight: 'bold' }}>Daily Entry</Text>
-                    </LinearGradient>
+                    <View style={styles.dailyEntryButton}>
+                        <Text style={{ fontSize: 26, fontWeight: 'bold', padding: 20 }}>Daily Entry</Text>
+                    </View>
                 </TouchableOpacity>
             </View>
 
 
             {entryQuestions && (
-                <View style={styles.dailyEntry}>
-                    <TouchableOpacity onPress={() => {setEntryQuestions(false)}}>
-                        <Text style={{fontSize: 50, color: 'purple'}}>Poop</Text>
-                    </TouchableOpacity>
+                <>
+                <View style={styles.detailedDailyEntryScreen}>
+                    <TouchableOpacity onPress={() => {setEntryQuestions(false)}} style={{ alignSelf: 'flex-start', marginLeft: 'auto', marginRight: 30, marginBottom: 20 }}>
+                        <Entypo name='circle-with-cross' size={67} color='white' />
+                    </TouchableOpacity>       
 
+                    <View style={[{ backgroundColor: 'white', padding: 30, borderRadius: 30, justifyContent: 'center', alignItems: 'center'  }]}>     
+                        <Text style={{fontSize: 45, marginBottom: 20  }}>{formattedDate} Entry</Text>
+
+                        <View style={[{ backgroundColor: 'rgba(0,0,0,0.5)', height: 3, width: 280, borderRadius: 3, marginBottom: 20}]}></View>
+
+                        <Text style={[{ alignSelf: 'flex-start', marginBottom: 20, fontSize: 16 }]}>How are you Feeling?</Text>
+                        <View style={styles.wrapper}>
+                            <View style={styles.grid}>
+                                {moodOptions.map((option) => {
+                                    const hasSelection = selectedValue !== null;
+                                    const isSelected = selectedValue === option.value;
+
+                                return (
+                                <TouchableOpacity
+                                    key={option.id}
+                                    onPress={() => setSelectedValue(option.value)}
+                                    activeOpacity={0.9}
+                                    style={[
+                                    styles.circle,
+                                    {
+                                        backgroundColor: option.color,
+                                        opacity: !hasSelection || isSelected ? 1 : 0.35,  // fade others
+                                        borderWidth: isSelected ? 3 : 0,                  // border only selected
+                                        borderColor: "rgba(0,0,0,0.15)",
+                                        transform: [{ scale: isSelected ? 1.05 : 1 }],    // optional
+                                    },
+                                    ]}
+                                />
+                                )
+                                })}
+                            </View>
+                        </View>
+
+                        <View style={styles.detailedDailyEntry}>
+                            <Text></Text>
+                            <TextInput style={styles.textInputDailyEntry} placeholder={'Additional Notes...'} placeholderTextColor={'rgba(0,0,0,0.5)'} multiline/>
+                        </View>
+
+                        <TouchableOpacity>
+                            <Text style={[styles.dailyEntryButton, { padding: 15, fontSize: 20, fontWeight: 'bold', paddingHorizontal: '50' }]}>Submit</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
-
+                </>
             )}
 
         </View>
@@ -100,6 +169,9 @@ const AvatarPage = () => {
         
     )
 }
+
+const SIZE = 80;
+const GAP = 16;
 
 const styles = StyleSheet.create({
     container: {
@@ -142,13 +214,18 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderColor: 'rgba(0,0,0,0.35)',
         borderRadius: 20,
+        backgroundColor: 'rgba(0,0,0,0.2)',
 
         justifyContent: 'center',
         alignItems: 'center',
-        padding: 20,
     },
 
-    dailyEntry: {
+    detailedDailyEntry: {
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+
+    detailedDailyEntryScreen: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
@@ -159,8 +236,41 @@ const styles = StyleSheet.create({
         right: 0,
         left: 0,
 
-        backgroundColor: 'rgba(0,0,0,0.5)',
-    }
+        backgroundColor: 'rgba(0,0,0,0.7)',
+    },
+
+    textInputDailyEntry: {
+        width: 250,
+        height: 100,
+        fontSize: 16,
+
+        padding: 10,
+        marginVertical: 30,
+
+        backgroundColor: 'rgba(0,0,0,0.2)',
+        borderRadius: 15,
+    },
+
+
+    wrapper: {
+        alignItems: 'center',
+    },
+
+    grid: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        width: SIZE * 3 + GAP * 2, // EXACT width of 3 items
+        justifyContent: 'center',
+        gap: GAP,
+    },
+
+    circle: {
+        width: SIZE,
+        height: SIZE,
+        borderRadius: SIZE / 2,
+    },
+
+    
 })
 
 export default AvatarPage;
