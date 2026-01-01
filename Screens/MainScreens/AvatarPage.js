@@ -121,7 +121,7 @@ const AvatarPage = () => {
                     <View style={[{ backgroundColor: 'white', padding: 30, borderRadius: 30, justifyContent: 'center', alignItems: 'center'  }]}>     
                         <Text style={{fontSize: 45, marginBottom: 20  }}>{formattedDate} Entry</Text>
 
-                        <View style={[{ backgroundColor: 'rgba(0,0,0,0.5)', height: 3, width: 280, borderRadius: 3, marginBottom: 20}]}></View>
+                        <View style={[{ backgroundColor: 'rgba(0,0,0,0.5)', height: 3, width: 280, borderRadius: 3, marginBottom: 20}]}/>
 
                         <Text style={[{ alignSelf: 'flex-start', marginBottom: 20, fontSize: 16 }]}>How are you Feeling?</Text>
                         <View style={styles.wrapper}>
@@ -156,7 +156,7 @@ const AvatarPage = () => {
                             <TextInput style={styles.textInputDailyEntry} placeholder={'Additional Notes...'} placeholderTextColor={'rgba(0,0,0,0.5)'} multiline/>
                         </View>
 
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => {setEntryQuestions(false)}}>
                             <Text style={[styles.dailyEntryButton, { padding: 15, fontSize: 20, fontWeight: 'bold', paddingHorizontal: '50' }]}>Submit</Text>
                         </TouchableOpacity>
                     </View>
@@ -216,6 +216,8 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         backgroundColor: 'rgba(0,0,0,0.2)',
 
+        color: 'rgba(0,0,0,0.6)',
+
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -267,7 +269,7 @@ const styles = StyleSheet.create({
     circle: {
         width: SIZE,
         height: SIZE,
-        borderRadius: SIZE / 2,
+        borderRadius: SIZE / 4,
     },
 
     
