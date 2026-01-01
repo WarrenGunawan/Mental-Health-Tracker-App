@@ -1,5 +1,7 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View, KeyboardAvoidingView, TextInput } from "react-native";
 import { useNavigation } from "@react-navigation/core";
+
+import AntDesign from '@expo/vector-icons/AntDesign';
 
 const SignUpPage = () => {
 
@@ -9,8 +11,30 @@ const SignUpPage = () => {
     return (
 
 
-        <View style={styles.container}>  
-            <Text style={[{ fontSize: 60 }]}>Sign Up Page</Text>
+        <KeyboardAvoidingView style={styles.container} behavior='padding'> 
+            <View style={[{ flexDirection: 'row', marginBottom: 20, }]}>
+                            <Text style={[{ fontSize: 60 }]}>InnerHue </Text>
+                            <AntDesign name="aliwangwang" size={70} color="black" />
+                        </View>
+            
+                        <View style={[{ backgroundColor: 'rgba(0,0,0,0.5)', height: 3, width: 350, borderRadius: 3, marginBottom: 50}]}/>
+            
+                        <View style={[{ alignSelf: 'flex-start', marginLeft: 80, marginBottom: 5 }]}>
+                            <Text>Enjoy Your Stay!</Text>
+                        </View>
+            
+                        <TextInput style={styles.textInputStyle} placeholder='Name' placeholderTextColor='rgba(0,0,0,0.5)' autoCorrect={false}/>
+                        <TextInput style={styles.textInputStyle} placeholder='Email' placeholderTextColor='rgba(0,0,0,0.5)' autoCorrect={false}/>
+                        <TextInput style={styles.textInputStyle} placeholder='Password' placeholderTextColor='rgba(0,0,0,0.5)' autoCorrect={false}/>
+            
+            
+                        <View style={[{ backgroundColor: 'rgba(0,0,0,0.5)', height: 3, width: 350, borderRadius: 3, marginTop: 50 }]}/>
+            
+            
+                        <TouchableOpacity>
+                            <Text style={[styles.loginButton, { marginTop: 30, padding: 15, fontSize: 20, fontWeight: 'bold', paddingHorizontal: 110 }]}>Sign Up</Text>
+                        </TouchableOpacity>
+            
 
 
             <View style={[{ flexDirection: 'row' }]}>
@@ -22,7 +46,7 @@ const SignUpPage = () => {
                     <Text style={styles.testText}>Go to Avatar</Text>
                 </TouchableOpacity>
             </View>
-        </View>
+        </KeyboardAvoidingView>
     )
 }
 
@@ -43,6 +67,38 @@ const styles = StyleSheet.create({
     testText: {
         color: 'white',
         fontSize: 30,
+    },
+
+    input: {
+        padding: 5,
+        borderRadius: 50,
+        borderWidth: 3,
+        borderColor: 'green',
+        margin: 5,
+    },
+
+    textInputStyle: {
+        width: 250,
+        height: 40,
+        fontSize: 16,
+
+        padding: 10,
+
+        backgroundColor: 'rgba(0,0,0,0.2)',
+        borderRadius: 15,
+        margin: 5,
+    },
+
+    loginButton: {
+        borderWidth: 2,
+        borderColor: 'rgba(0,0,0,0.35)',
+        borderRadius: 20,
+        backgroundColor: 'rgba(0,0,0,0.2)',
+
+        color: 'rgba(0,0,0,0.6)',
+
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 })
 
