@@ -97,16 +97,15 @@ const AvatarPage = () => {
                 ))}
             </View>
 
-                
+            
+            <LinearGradient colors={['rgba(0,0,0,0.35)', 'transparent']} start={{ x: 0, y: 1 }} end={{ x: 0, y: 0 }} style={{ height: 5, width: '100%', marginTop: 5 }} />
 
 
             <View style={[{ flexDirection: 'col' }, styles.inputContainer]}>
                 <Text style={styles.statusText}>{dailyMessage}</Text>
 
-                <TouchableOpacity style={{ width: '100%' }} onPress={() => {setEntryQuestions(true)}}>
-                    <View style={styles.dailyEntryButton}>
-                        <Text style={{ fontSize: 26, fontWeight: 'bold', padding: 20 }}>Daily Entry</Text>
-                    </View>
+                <TouchableOpacity style={{ width: '100%', alignItems: 'center', justifyContent: 'center' }} onPress={() => {setEntryQuestions(true)}}>
+                    <Text style={[ styles.dailyEntryButton, { fontSize: 26, fontWeight: 'bold', padding: 20, paddingHorizontal: 85 }]}>Daily Entry</Text>
                 </TouchableOpacity>
             </View>
 
@@ -202,7 +201,7 @@ const styles = StyleSheet.create({
         padding: 20,
         borderWidth: 2,
         borderRadius: 30,
-        borderColor: 'black',
+        borderColor: 'rgba(0,0,0,0.35)',
         marginVertical: 20,
         width: '90%',
 
