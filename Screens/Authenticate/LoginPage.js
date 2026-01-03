@@ -1,5 +1,9 @@
 import { StyleSheet, Text, TouchableOpacity, View, TextInput, KeyboardAvoidingView } from "react-native";
 import { useNavigation } from "@react-navigation/core";
+import { useState, useEffect } from 'react';
+
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebase";
 
 import AntDesign from '@expo/vector-icons/AntDesign';
 
@@ -8,6 +12,17 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 const LoginPage = () => {
 
     const navigation = useNavigation();
+
+    const [ email, setEmail ] = useState();
+    const [ password, setPassword ] = useState();
+
+    const handleSignIn = () => {
+        signInWithEmailAndPassword(auth, email, password).then(userCredentials => {
+            const user = userCredentials.user;
+            console.log('Signed in with:', user.email);
+            navigation.replace('avatarpage')
+        })
+        .catch(error => alert(error.message))};
 
 
     return (
@@ -23,14 +38,25 @@ const LoginPage = () => {
                 <Text>Welcome Friend!</Text>
             </View>
 
-            <TextInput style={styles.textInputStyle} placeholder='Email' placeholderTextColor='rgba(0,0,0,0.5)' autoCorrect={false}></TextInput>
-            <TextInput style={styles.textInputStyle} placeholder='Password' placeholderTextColor='rgba(0,0,0,0.5)' autoCorrect={false}></TextInput>
+            <TextInput style={styles.textInputStyle} 
+                placeholder='Email' 
+                placeholderTextColor='rgba(0,0,0,0.5)' 
+                autoCorrect={false}
+                onChangeText={text => setEmail(text)}
+                autoCapitalize='false'/>
+            <TextInput style={styles.textInputStyle} 
+                placeholder='Password' 
+                placeholderTextColor='rgba(0,0,0,0.5)' 
+                autoCorrect={false}
+                onChangeText={text => setPassword(text)}
+                autoCapitalize='false'
+                secureTextEntry/>
 
 
             <View style={[{ backgroundColor: 'rgba(0,0,0,0.5)', height: 3, width: 350, borderRadius: 3, marginTop: 50 }]}/>
 
 
-            <TouchableOpacity>
+            <TouchableOpacity onPress={handleSignIn}>
                 <Text style={[styles.loginButton, { marginTop: 30, padding: 15, fontSize: 20, fontWeight: 'bold', paddingHorizontal: 120 }]}>Login</Text>
             </TouchableOpacity>
 
@@ -38,13 +64,9 @@ const LoginPage = () => {
             <View style={[{ flexDirection: 'row', margin: 10 }]}>
                 <Text>Don't have an account? </Text>
                 <TouchableOpacity onPress={() => navigation.replace('signup')}>
-                    <Text >Register now!</Text>
+                    <Text style={[{ color: "#rgba(0,0,0,0.5)", textDecorationLine: 'underline' }]}>Register now!</Text>
                 </TouchableOpacity>
             </View>
-
-            <TouchableOpacity style={styles.testButton} onPress={() => navigation.replace('avatarpage')}>
-                <Text style={styles.testText}>Go to Avatar</Text>
-            </TouchableOpacity>
         </KeyboardAvoidingView>
     )
 }

@@ -1,5 +1,10 @@
 import { StyleSheet, Text, TouchableOpacity, View, KeyboardAvoidingView, TextInput } from "react-native";
 import { useNavigation } from "@react-navigation/core";
+import { useState, useEffect } from 'react';
+
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from '../../firebase';
+
 
 import AntDesign from '@expo/vector-icons/AntDesign';
 
@@ -7,45 +12,63 @@ const SignUpPage = () => {
 
     const navigation = useNavigation();
 
+    const [ email, setEmail ] = useState();
+    const [ password, setPassword ] = useState();
+
+    const handleSignUp = () => {
+        createUserWithEmailAndPassword(auth, email, password).then(userCredentials => {
+            const user = userCredentials.user;
+            console.log('Registered with:', user.email);
+            navigation.replace('login');
+        })
+        .catch(error => alert(error.message))};
+
 
     return (
 
 
         <KeyboardAvoidingView style={styles.container} behavior='padding'> 
             <View style={[{ flexDirection: 'row', marginBottom: 20, }]}>
-                            <Text style={[{ fontSize: 60 }]}>InnerHue </Text>
-                            <AntDesign name="aliwangwang" size={70} color="black" />
-                        </View>
+                    <Text style={[{ fontSize: 60 }]}>InnerHue </Text>
+                    <AntDesign name="aliwangwang" size={70} color="black" />
+                </View>
             
-                        <View style={[{ backgroundColor: 'rgba(0,0,0,0.5)', height: 3, width: 350, borderRadius: 3, marginBottom: 50}]}/>
+                <View style={[{ backgroundColor: 'rgba(0,0,0,0.5)', height: 3, width: 350, borderRadius: 3, marginBottom: 50}]}/>
             
-                        <View style={[{ alignSelf: 'flex-start', marginLeft: 80, marginBottom: 5 }]}>
-                            <Text>Enjoy Your Stay!</Text>
-                        </View>
+                <View style={[{ alignSelf: 'flex-start', marginLeft: 80, marginBottom: 5 }]}>
+                    <Text>Enjoy Your Stay!</Text>
+                </View>
             
-                        <TextInput style={styles.textInputStyle} placeholder='Name' placeholderTextColor='rgba(0,0,0,0.5)' autoCorrect={false}/>
-                        <TextInput style={styles.textInputStyle} placeholder='Email' placeholderTextColor='rgba(0,0,0,0.5)' autoCorrect={false}/>
-                        <TextInput style={styles.textInputStyle} placeholder='Password' placeholderTextColor='rgba(0,0,0,0.5)' autoCorrect={false}/>
-            
-            
-                        <View style={[{ backgroundColor: 'rgba(0,0,0,0.5)', height: 3, width: 350, borderRadius: 3, marginTop: 50 }]}/>
-            
-            
-                        <TouchableOpacity>
-                            <Text style={[styles.loginButton, { marginTop: 30, padding: 15, fontSize: 20, fontWeight: 'bold', paddingHorizontal: 110 }]}>Sign Up</Text>
-                        </TouchableOpacity>
-            
+                <TextInput style={styles.textInputStyle} placeholder='Name' placeholderTextColor='rgba(0,0,0,0.5)' autoCorrect={false}/>
+                <TextInput style={styles.textInputStyle} 
+                    placeholder='Email' 
+                    placeholderTextColor='rgba(0,0,0,0.5)' 
+                    autoCorrect={false} 
+                    onChangeText={text => {setEmail(text)}} 
+                    autoCapitalize='false'/>
 
-
-            <View style={[{ flexDirection: 'row' }]}>
-                <TouchableOpacity style={styles.testButton} onPress={() => navigation.replace('login')}>
-                    <Text style={styles.testText}>Go to Login</Text>
+                <TextInput style={styles.textInputStyle} 
+                    placeholder='Password' 
+                    placeholderTextColor='rgba(0,0,0,0.5)' 
+                    autoCorrect={false} 
+                    onChangeText={text => {setPassword(text)}} 
+                    autoCapitalize='false'
+                    secureTextEntry/>
+            
+            
+                <View style={[{ backgroundColor: 'rgba(0,0,0,0.5)', height: 3, width: 350, borderRadius: 3, marginTop: 50 }]}/>
+            
+            
+                <TouchableOpacity onPress={handleSignUp}>
+                    <Text style={[styles.loginButton, { marginTop: 30, padding: 15, fontSize: 20, fontWeight: 'bold', paddingHorizontal: 110 }]}>Sign Up</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.testButton} onPress={() => navigation.replace('avatarpage')}>
-                    <Text style={styles.testText}>Go to Avatar</Text>
-                </TouchableOpacity>
-            </View>
+                <View style={[{ flexDirection: 'row', margin: 10 }]}>
+                    <TouchableOpacity onPress={() => navigation.replace('login')}>
+                        <Text style={[{ color: "#rgba(0,0,0,0.5)", textDecorationLine: 'underline' }]}>Login Here!</Text>
+                    </TouchableOpacity>
+                </View>
+            
         </KeyboardAvoidingView>
     )
 }
