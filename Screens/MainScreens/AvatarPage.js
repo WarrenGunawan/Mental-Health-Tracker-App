@@ -4,7 +4,10 @@ import { useNavigation } from '@react-navigation/core';
 
 import { LinearGradient } from 'expo-linear-gradient';
 
+import SignOutButton from '../../Components/SignOutButton';
+
 import Entypo from '@expo/vector-icons/Entypo';
+import Octicons from '@expo/vector-icons/Octicons';
 
 const AvatarPage = () => {
 
@@ -55,6 +58,8 @@ const AvatarPage = () => {
     const dailyMessage = submittedToday ? "Thank you for submitting your entry" : "Please fill out your entry";
 
 
+    const [ selectedOptions, setSelectedOptions ] = useState(false);
+
     return (
         <View style={styles.container} > 
         <Text style={{ fontSize: 20, position: 'absolute', top: '45' }}>{formattedDate}</Text>
@@ -64,8 +69,9 @@ const AvatarPage = () => {
                     <Text style={{ fontSize: 15}}>Entry List</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity>
-                    <Text style={{ fontSize: 15 }}>Options</Text>
+                <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => setSelectedOptions(true)}>
+                    <Text style={{ fontSize: 15 }}>Options </Text>
+                    <Octicons name='gear' size={18} color='black'/>
                 </TouchableOpacity>
 
             </View>
@@ -110,6 +116,15 @@ const AvatarPage = () => {
             </View>
 
 
+
+
+            {selectedOptions && (
+                <>
+                    <SignOutButton onClose={() => setSelectedOptions(false)} />
+                </>
+            )}
+
+
             {entryQuestions && (
                 <>
                 <View style={styles.detailedDailyEntryScreen}>
@@ -151,7 +166,6 @@ const AvatarPage = () => {
                         </View>
 
                         <View style={styles.detailedDailyEntry}>
-                            <Text></Text>
                             <TextInput style={styles.textInputDailyEntry} placeholder={'Additional Notes...'} placeholderTextColor={'rgba(0,0,0,0.5)'} multiline/>
                         </View>
 
