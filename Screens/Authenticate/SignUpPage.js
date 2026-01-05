@@ -19,7 +19,6 @@ const SignUpPage = () => {
         createUserWithEmailAndPassword(auth, email, password).then(userCredentials => {
             const user = userCredentials.user;
             console.log('Registered with:', user.email);
-            navigation.replace('login');
         })
         .catch(error => alert(error.message))};
 

@@ -20,7 +20,6 @@ const LoginPage = () => {
         signInWithEmailAndPassword(auth, email, password).then(userCredentials => {
             const user = userCredentials.user;
             console.log('Signed in with:', user.email);
-            navigation.replace('avatarpage')
         })
         .catch(error => alert(error.message))};
 
