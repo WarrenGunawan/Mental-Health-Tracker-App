@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/core';
 import { LinearGradient } from 'expo-linear-gradient';
 
 import SignOutButton from '../../Components/SignOutButton';
+import DetailedEntryView from '../../Components/DetailedEntryView';
 
 import Entypo from '@expo/vector-icons/Entypo';
 import Octicons from '@expo/vector-icons/Octicons';
@@ -127,53 +128,11 @@ const AvatarPage = () => {
 
             {entryQuestions && (
                 <>
-                <View style={styles.detailedDailyEntryScreen}>
-                    <TouchableOpacity onPress={() => {setEntryQuestions(false)}} style={{ alignSelf: 'flex-start', marginLeft: 'auto', marginRight: 30, marginBottom: 20 }}>
-                        <Entypo name='circle-with-cross' size={67} color='white' />
-                    </TouchableOpacity>       
-
-                    <View style={[{ backgroundColor: 'white', padding: 30, borderRadius: 30, justifyContent: 'center', alignItems: 'center'  }]}>     
-                        <Text style={{fontSize: 45, marginBottom: 20  }}>{formattedDate} Entry</Text>
-
-                        <View style={[{ backgroundColor: 'rgba(0,0,0,0.5)', height: 3, width: 280, borderRadius: 3, marginBottom: 20}]}/>
-
-                        <Text style={[{ alignSelf: 'flex-start', marginBottom: 20, fontSize: 16 }]}>How are you Feeling?</Text>
-                        <View style={styles.wrapper}>
-                            <View style={styles.grid}>
-                                {moodOptions.map((option) => {
-                                    const hasSelection = selectedValue !== null;
-                                    const isSelected = selectedValue === option.value;
-
-                                return (
-                                <TouchableOpacity
-                                    key={option.id}
-                                    onPress={() => setSelectedValue(option.value)}
-                                    activeOpacity={0.9}
-                                    style={[
-                                    styles.circle,
-                                    {
-                                        backgroundColor: option.color,
-                                        opacity: !hasSelection || isSelected ? 1 : 0.35,  // fade others
-                                        borderWidth: isSelected ? 3 : 0,                  // border only selected
-                                        borderColor: "rgba(0,0,0,0.15)",
-                                        transform: [{ scale: isSelected ? 1.05 : 1 }],    // optional
-                                    },
-                                    ]}
-                                />
-                                )
-                                })}
-                            </View>
-                        </View>
-
-                        <View style={styles.detailedDailyEntry}>
-                            <TextInput style={styles.textInputDailyEntry} placeholder={'Additional Notes...'} placeholderTextColor={'rgba(0,0,0,0.5)'} multiline/>
-                        </View>
-
-                        <TouchableOpacity onPress={() => {setEntryQuestions(false)}}>
-                            <Text style={[styles.dailyEntryButton, { padding: 15, fontSize: 20, fontWeight: 'bold', paddingHorizontal: '50' }]}>Submit</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
+                    <DetailedEntryView onClose={() => setEntryQuestions(false)} 
+                        selectedValue={selectedValue} 
+                        setSelectedValue={setSelectedValue}
+                        formattedDate={formattedDate}
+                        moodOptions={moodOptions} />
                 </>
             )}
 
@@ -183,8 +142,6 @@ const AvatarPage = () => {
     )
 }
 
-const SIZE = 80;
-const GAP = 16;
 
 const styles = StyleSheet.create({
     container: {
@@ -234,57 +191,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-
-    detailedDailyEntry: {
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-
-    detailedDailyEntryScreen: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-
-        position: 'absolute',
-        top: 0,
-        bottom: 0,
-        right: 0,
-        left: 0,
-
-        backgroundColor: 'rgba(0,0,0,0.7)',
-    },
-
-    textInputDailyEntry: {
-        width: 250,
-        height: 100,
-        fontSize: 16,
-
-        padding: 10,
-        marginVertical: 30,
-
-        backgroundColor: 'rgba(0,0,0,0.2)',
-        borderRadius: 15,
-    },
-
-
-    wrapper: {
-        alignItems: 'center',
-    },
-
-    grid: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        width: SIZE * 3 + GAP * 2, // EXACT width of 3 items
-        justifyContent: 'center',
-        gap: GAP,
-    },
-
-    circle: {
-        width: SIZE,
-        height: SIZE,
-        borderRadius: SIZE / 4,
-    },
-
     
 })
 
