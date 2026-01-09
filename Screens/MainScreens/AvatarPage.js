@@ -1,14 +1,17 @@
 import { StyleSheet, Text, TouchableOpacity, View, TextInput, Button } from 'react-native';
-import { useState } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useNavigation } from '@react-navigation/core';
-
 import { LinearGradient } from 'expo-linear-gradient';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import SignOutButton from '../../Components/SignOutButton';
 import DetailedEntryView from '../../Components/DetailedEntryView';
+import ImageMoodDisplay from '../../Components/ImageMoodDisplay';
 
 import Entypo from '@expo/vector-icons/Entypo';
 import Octicons from '@expo/vector-icons/Octicons';
+
 
 const AvatarPage = () => {
 
@@ -53,13 +56,54 @@ const AvatarPage = () => {
         return `${y}-${m}-${day}`; // e.g. 2025-12-31
     };
 
-    const [lastSubmittedDate, setLastSubmittedDate] = useState(null);
 
-    const submittedToday = lastSubmittedDate === todayKey();
+    const ENTRY_STORAGE_KEY = 'today_entry_v1';
+
+    const [todayEntry, setTodayEntry] = useState(null); 
+
+    useEffect(() => {
+    const loadEntry = async () => {
+        try {
+        const raw = await AsyncStorage.getItem(ENTRY_STORAGE_KEY);
+        if (raw) setTodayEntry(JSON.parse(raw));
+        } catch (e) {
+        console.log("Failed to load entry:", e);
+        }
+    };
+    loadEntry();
+    }, []);
+
+
+    const keyToday = todayKey();
+    const submittedToday = todayEntry?.dateKey === keyToday;
+
     const dailyMessage = submittedToday ? "Thank you for submitting your entry" : "Please fill out your entry";
 
 
     const [ selectedOptions, setSelectedOptions ] = useState(false);
+
+    const handleEntrySubmit = async ({ mood, notes }) => {
+        if (submittedToday) return; // hard lock (safety)
+
+        const newEntry = { dateKey: keyToday, mood, notes };
+
+        setTodayEntry(newEntry);
+
+        try {
+            await AsyncStorage.setItem(ENTRY_STORAGE_KEY, JSON.stringify(newEntry));
+        } catch (e) {
+            console.log("Failed to persist entry:", e);
+        }
+
+        setSelectedValue(mood);
+        setEntryQuestions(false);
+
+        //Update later to save the notes
+    }
+
+
+
+
 
     return (
         <View style={styles.container} > 
@@ -96,7 +140,7 @@ const AvatarPage = () => {
                     ))}
                 </View>
             </View>
-            <Entypo name='github' size={300} style={{ marginTop: -30}}/>
+            <ImageMoodDisplay selectedValue={selectedValue}/>
 
             <View style={{ flexDirection: 'row', columnGap: 2, width: '100%', justifyContent: 'center', marginTop: -40, marginBottom: -20  }}>
                 {[...Array(30)].map((_, i) => (
@@ -112,7 +156,7 @@ const AvatarPage = () => {
                 <Text style={styles.statusText}>{dailyMessage}</Text>
 
                 <TouchableOpacity style={{ width: '100%', alignItems: 'center', justifyContent: 'center' }} onPress={() => {setEntryQuestions(true)}}>
-                    <Text style={[ styles.dailyEntryButton, { fontSize: 26, fontWeight: 'bold', padding: 20, paddingHorizontal: 85 }]}>Daily Entry</Text>
+                    <Text style={[ styles.dailyEntryButton, { fontSize: 26, fontWeight: 'bold', padding: 20, paddingHorizontal: 85 }]}>{submittedToday? 'View Entry' : 'Daily Entry'}</Text>
                 </TouchableOpacity>
             </View>
 
@@ -129,6 +173,7 @@ const AvatarPage = () => {
             {entryQuestions && (
                 <>
                     <DetailedEntryView onClose={() => setEntryQuestions(false)} 
+                        onSubmit={handleEntrySubmit}
                         selectedValue={selectedValue} 
                         setSelectedValue={setSelectedValue}
                         formattedDate={formattedDate}

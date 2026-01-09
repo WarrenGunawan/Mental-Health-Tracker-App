@@ -1,9 +1,25 @@
 import { StyleSheet, Text, View, TouchableOpacity, TextInput, Pressable } from 'react-native';
+import { useState } from 'react';
 
 import Entypo from '@expo/vector-icons/Entypo';
 
 
-function DetailedEntryView({ onClose, selectedValue, setSelectedValue, formattedDate, moodOptions }) {
+
+function DetailedEntryView({ onClose, onSubmit ,selectedValue, setSelectedValue, formattedDate, moodOptions }) {
+    const [notes, setNotes] = useState("");
+
+    const handleSubmit = () => {
+        if(selectedValue == null) {
+            alert("Pick a mood first!");
+            return;
+        } 
+        onSubmit({ mood: selectedValue, notes});
+        onClose();
+    }
+
+
+
+
     return (
         <View style={styles.detailedDailyEntryScreen}>
             <Pressable style={styles.backdrop} onPress={onClose} />
@@ -46,10 +62,14 @@ function DetailedEntryView({ onClose, selectedValue, setSelectedValue, formatted
                 </View>
 
                 <View style={styles.detailedDailyEntry}>
-                    <TextInput style={styles.textInputDailyEntry} placeholder={'Additional Notes...'} placeholderTextColor={'rgba(0,0,0,0.5)'} multiline/>
+                    <TextInput style={styles.textInputDailyEntry} 
+                        placeholder={'Additional Notes...'} 
+                        placeholderTextColor={'rgba(0,0,0,0.5)'} 
+                        multiline
+                        onChange={(text) => {setNotes(text)}}/>
                 </View>
 
-                <TouchableOpacity onPress={onClose}>
+                <TouchableOpacity onPress={handleSubmit}>
                     <Text style={[styles.submitButton, { padding: 15, fontSize: 20, fontWeight: 'bold', paddingHorizontal: '50' }]}>Submit</Text>
                 </TouchableOpacity>
             </View>
