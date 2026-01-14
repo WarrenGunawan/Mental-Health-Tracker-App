@@ -22,12 +22,21 @@ const AvatarPage = () => {
     let date = currentDate.getDate();
 
     const lastNum = date % 10;
+    const secondToLastNum = Math.floor(date / 10);
     if(lastNum == 1) {
         date += 'st';
     } else if(lastNum == 2) {
-        date += 'nd';
+        if(secondToLastNum == 1) {
+            date +='th';
+        } else {
+            date += 'nd';
+        }
     } else if(lastNum == 3) {
-        date += 'rd';
+        if(secondToLastNum == 1) {
+            date +='th';
+        } else {
+            date += 'rd';
+        }
     } else {
         date += 'th';
     }
