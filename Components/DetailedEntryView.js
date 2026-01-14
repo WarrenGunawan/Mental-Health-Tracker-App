@@ -83,7 +83,7 @@ const GAP = 16;
 
 const styles = StyleSheet.create({
     submitButton: {
-        borderWidth: 2,
+        borderWidth: 0,
         borderColor: 'rgba(0,0,0,0.35)',
         borderRadius: 20,
         backgroundColor: 'rgba(0,0,0,0.2)',

@@ -3,14 +3,18 @@ import { useState, useEffect, useMemo } from 'react';
 import { useNavigation } from '@react-navigation/core';
 import { LinearGradient } from 'expo-linear-gradient';
 
+import { db } from '../../firebase';
+import { setDoc, doc, serverTimestamp, getDoc } from 'firebase/firestore';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import SignOutButton from '../../Components/SignOutButton';
 import DetailedEntryView from '../../Components/DetailedEntryView';
 import ImageMoodDisplay from '../../Components/ImageMoodDisplay';
+import SubmittedDetailedEntryView from '../../Components/SubmittedDetailedEntryView';
 
-import Entypo from '@expo/vector-icons/Entypo';
 import Octicons from '@expo/vector-icons/Octicons';
+import { useAuth } from '../../AuthContext';
 
 
 const AvatarPage = () => {
@@ -60,8 +64,8 @@ const AvatarPage = () => {
     const todayKey = () => {
         const d = new Date();
         const y = d.getFullYear();
-        const m = String(d.getMonth() + 1).padStart(2, "0");
-        const day = String(d.getDate()).padStart(2, "0");
+        const m = String(d.getMonth() + 1).padStart(2, '0');
+        const day = String(d.getDate()).padStart(2, '0');
         return `${y}-${m}-${day}`; // e.g. 2025-12-31
     };
 
@@ -76,7 +80,7 @@ const AvatarPage = () => {
         const raw = await AsyncStorage.getItem(ENTRY_STORAGE_KEY);
         if (raw) setTodayEntry(JSON.parse(raw));
         } catch (e) {
-        console.log("Failed to load entry:", e);
+        console.log('Failed to load entry:', e);
         }
     };
     loadEntry();
@@ -86,29 +90,52 @@ const AvatarPage = () => {
     const keyToday = todayKey();
     const submittedToday = todayEntry?.dateKey === keyToday;
 
-    const dailyMessage = submittedToday ? "Thank you for submitting your entry" : "Please fill out your entry";
+    const dailyMessage = submittedToday ? 'Thank you for submitting your entry' : 'Please fill out your entry';
 
 
     const [ selectedOptions, setSelectedOptions ] = useState(false);
 
+
+
+    const { user } = useAuth();
+    const uid = user?.uid;
+
     const handleEntrySubmit = async ({ mood, notes }) => {
-        if (submittedToday) return; // hard lock (safety)
+        if (submittedToday) return; 
+
+        if (!uid) {
+            console.log('No user signed in — cannot save entry.');
+            return;
+        }
 
         const newEntry = { dateKey: keyToday, mood, notes };
 
         setTodayEntry(newEntry);
 
-        try {
-            await AsyncStorage.setItem(ENTRY_STORAGE_KEY, JSON.stringify(newEntry));
-        } catch (e) {
-            console.log("Failed to persist entry:", e);
-        }
+
+        const snap = await getDoc(entryRef);
+        const isNew = !snap.exists();
+
+        const entryRef = doc(db, 'users', uid, 'entries', keyToday);
+        await setDoc(
+            entryRef,
+            {
+                dateKey: keyToday,           
+                mood,            
+                notes,             
+                updatedAt: serverTimestamp(),
+                ...(isNew ? { createdAt: serverTimestamp() } : {}),
+            },
+            {merge: true}
+        );
+
+        await AsyncStorage.setItem(ENTRY_STORAGE_KEY, JSON.stringify(newEntry));
 
         setSelectedValue(mood);
         setEntryQuestions(false);
-
-        //Update later to save the notes
     }
+
+
 
 
 
@@ -175,14 +202,20 @@ const AvatarPage = () => {
 
 
             {entryQuestions && (
-                <>
+                submittedToday ? (
+                    <SubmittedDetailedEntryView onClose={() => setEntryQuestions(false)}
+                        formattedDate={formattedDate}
+                        moodOptions={moodOptions}
+                        mood={todayEntry.mood}
+                        notes={todayEntry.notes} />
+                ) : (
                     <DetailedEntryView onClose={() => setEntryQuestions(false)} 
                         onSubmit={handleEntrySubmit}
                         selectedValue={selectedValue} 
                         setSelectedValue={setSelectedValue}
                         formattedDate={formattedDate}
                         moodOptions={moodOptions} />
-                </>
+                )
             )}
 
         </View>
