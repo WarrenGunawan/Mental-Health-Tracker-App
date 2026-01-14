@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import LoginPage from "./Screens/Authenticate/LoginPage";
 import SignUpPage from "./Screens/Authenticate/SignUpPage";
@@ -13,7 +14,12 @@ import EntryList from "./Screens/MainScreens/EntryList";
 import { AuthProvider, useAuth } from "./AuthContext";
 
 
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+
+
 const Stack = createNativeStackNavigator();
+
+const Tab = createBottomTabNavigator();
 
 function AuthStack() {
   return (
@@ -24,12 +30,37 @@ function AuthStack() {
   )
 }
 
-function AppStack() {
+function AppTabs() {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name='avatarpage' component={AvatarPage} ></Stack.Screen>
-      <Stack.Screen name='entrylist' component={EntryList} options={{ animation: 'slide_from_left' }}></Stack.Screen>
-    </Stack.Navigator>
+    <Tab.Navigator screenOptions={{ headerShown: false }} initialRouteName={'avatarpage'}>
+      <Tab.Screen name='entrylist' 
+        component={EntryList}
+        options={{
+          tabBarShowLabel: false,
+          tabBarIcon: ({ focused }) => {
+            return(
+              <MaterialCommunityIcons
+                name={focused ? 'list-box' : 'list-box-outline'} 
+                size={30} 
+                color={'black'} />
+            )
+          },
+        }} />
+      <Tab.Screen name='avatarpage' 
+        component={AvatarPage} 
+        options={{
+          tabBarShowLabel: false,
+          tabBarIcon: ({ focused, size }) => {
+            return(
+              <MaterialCommunityIcons
+                name={focused ? 'bread-slice' : 'bread-slice-outline'} 
+                size={30} 
+                color={'black'} />
+            )
+          },
+        }}
+         />
+    </Tab.Navigator>
   )
 }
 
@@ -38,7 +69,7 @@ function RootNavigator() {
 
   if (!authReady) return null; 
 
-  return user ? <AppStack /> : <AuthStack />;
+  return user ? <AppTabs /> : <AuthStack />;
 }
 
 
