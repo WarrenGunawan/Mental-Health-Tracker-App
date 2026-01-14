@@ -2,9 +2,12 @@ import { StyleSheet, Text, TouchableOpacity, View, ScrollView } from "react-nati
 import { useNavigation } from "@react-navigation/core";
 import { LinearGradient } from 'expo-linear-gradient';
 
-import AntDesign from '@expo/vector-icons/AntDesign';
-
 import EntryListBox from '../../Components/EntryListBox';
+
+import AntDesign from '@expo/vector-icons/AntDesign';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+
+
 
 const EntryList = () => {
 
@@ -15,7 +18,7 @@ const EntryList = () => {
         <View style={styles.container}>
             <View style={styles.topContainer}>
                 <Text style={{ fontSize: 20 }}>InnerHue </Text>
-                <AntDesign name="aliwangwang" size={20} color="black" />
+                <MaterialCommunityIcons name="bread-slice-outline" size={20} color="black" />
             </View>
             <LinearGradient colors={['rgba(0,0,0,0.35)', 'transparent']} start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }} style={{ height: 5, width: '100%' }} />
 
@@ -35,7 +38,7 @@ const EntryList = () => {
 
 
                 <View style={[{ flexDirection: 'row' }]}>
-                    <TouchableOpacity style={styles.testButton} onPress={() => navigation.replace('avatarpage')}>
+                    <TouchableOpacity style={styles.testButton} onPress={() => navigation.replace('apage')}>
                         <Text style={styles.testText}>Go to Avatar</Text>
                     </TouchableOpacity>
 

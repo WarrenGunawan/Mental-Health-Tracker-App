@@ -118,11 +118,6 @@ const AvatarPage = () => {
         <View style={styles.container} > 
         <Text style={{ fontSize: 20, position: 'absolute', top: '45' }}>{formattedDate}</Text>
             <View style={styles.topContainer}>
-                <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => navigation.replace('entrylist')}>
-                    <Entypo name='chevron-left' size={18} />
-                    <Text style={{ fontSize: 15}}>Entry List</Text>
-                </TouchableOpacity>
-
                 <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => setSelectedOptions(true)}>
                     <Text style={{ fontSize: 15 }}>Options </Text>
                     <Octicons name='gear' size={18} color='black'/>
