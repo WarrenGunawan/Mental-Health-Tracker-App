@@ -5,7 +5,7 @@ function EntryListBox({}) {
     const { width, height, scale, fontScale } = useWindowDimensions();
 
     const testDate = 'May 13th';
-    const testText = 'I have ';
+    const testText = 'I have never been able to do this before.';
 
 
     return (
@@ -14,11 +14,14 @@ function EntryListBox({}) {
                 <Text style={styles.date}>{testDate}</Text>
             </View>
 
-            <View style={[ styles.container, { width: (width / 2) - 10, height: 70 }]}>
+            <View style={[ styles.container, { width: (width / 2) - 15, height: 120 }]}>
 
                 <View style={styles.boxContent}>
                     <View style={styles.circle}/>
-                    <Text>{testText}</Text>
+
+                    <View style={styles.textContainer}>
+                        <Text style={{ margin: 10 }}>{testText}</Text>
+                    </View>
                 </View>
             </View>
         </View>
@@ -31,13 +34,16 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'row',
-        margin: 5,
-        backgroundColor: 'rgba(0,0,0,0.2)',
+        marginVertical: 10,
+        marginLeft: 10,
+        backgroundColor: 'rgba(0,0,0,0.1)',
         borderRadius: 15,
+
     },
 
     date: {
         color: 'rgba(0,0,0,0.5)',
+        marginLeft: 20,
     },
 
     boxContent: {
@@ -48,10 +54,27 @@ const styles = StyleSheet.create({
         padding: 10,
     },
 
+    textContainer: {
+        backgroundColor: 'rgba(0,0,0,0.2)',
+
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+
+        marginVertical: 5,
+        marginLeft: 10,
+        height: '100%',
+
+        borderRadius: 10,
+
+    },
+
     circle: {
-        width: 20,
-        height: 20,
+        width: 30,
+        height: 30,
         borderRadius: 5,
+        borderWidth: 3,
+        borderColor: 'rgba(0,0,0,0.2)',
         backgroundColor: testColor,
     },
 });

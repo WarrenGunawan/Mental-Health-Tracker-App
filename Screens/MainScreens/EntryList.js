@@ -1,25 +1,25 @@
-import { StyleSheet, Text, TouchableOpacity, View, ScrollView } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View, ScrollView, SafeAreaView } from "react-native";
 import { useNavigation } from "@react-navigation/core";
 import { LinearGradient } from 'expo-linear-gradient';
 
 import EntryListBox from '../../Components/EntryListBox';
 
-import AntDesign from '@expo/vector-icons/AntDesign';
+import Octicons from '@expo/vector-icons/Octicons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+
+import TopBar from "../../Components/TopBar";
 
 
 
 const EntryList = () => {
 
-    const navigation = useNavigation();
+
 
 
     return (
-        <View style={styles.container}>
-            <View style={styles.topContainer}>
-                <Text style={{ fontSize: 20 }}>InnerHue </Text>
-                <MaterialCommunityIcons name="bread-slice-outline" size={20} color="black" />
-            </View>
+        <SafeAreaView style={styles.container}>
+            <TopBar />
+            
             <LinearGradient colors={['rgba(0,0,0,0.35)', 'transparent']} start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }} style={{ height: 5, width: '100%' }} />
 
             <ScrollView style={styles.scrollContainer} 
@@ -28,42 +28,25 @@ const EntryList = () => {
                 showsHorizontalScrollIndicator={false}
                 bounces={true}> 
                 
-                <Text style={[{ fontSize: 60 }]}>Entry List</Text>
+                <Text style={[{ fontSize: 60, fontWeight: 'bold', marginTop: 10 }]}>Entry List</Text>
+                
+                <View style={[{ backgroundColor: 'rgba(0,0,0,0.5)', height: 3, width: 350, borderRadius: 3, marginTop: 20, marginBottom: 10 }]}/>
 
                 <View style={styles.entries}>
                     <EntryListBox/>
                     <EntryListBox/>
                     <EntryListBox/>
                 </View>
-
-
-                <View style={[{ flexDirection: 'row' }]}>
-                    <TouchableOpacity style={styles.testButton} onPress={() => navigation.replace('apage')}>
-                        <Text style={styles.testText}>Go to Avatar</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style={styles.testButton} onPress={() => navigation.replace('login')}>
-                        <Text style={styles.testText}>Go to Login</Text>
-                    </TouchableOpacity>
-                </View>
             </ScrollView>
-        </View>
+        </SafeAreaView>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection: 'column',
-        marginTop: 35,
-    },
-
-    topContainer: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        width: '100%',
-        padding: 10,
         alignItems: 'center',
+        flexDirection: 'column',
     },
 
     scrollContainer: {

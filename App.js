@@ -1,17 +1,16 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import LoginPage from "./Screens/Authenticate/LoginPage";
-import SignUpPage from "./Screens/Authenticate/SignUpPage";
-import AvatarPage from "./Screens/MainScreens/AvatarPage";
+import LoginPage from './Screens/Authenticate/LoginPage';
+import SignUpPage from './Screens/Authenticate/SignUpPage';
+import AvatarPage from './Screens/MainScreens/AvatarPage';
+import ProfilePage from './Screens/MainScreens/ProfilePage';
+import EntryList from './Screens/MainScreens/EntryList';
 
-// eslint-disable-next-line import/no-unresolved
-import EntryList from "./Screens/MainScreens/EntryList";
-
-import { AuthProvider, useAuth } from "./AuthContext";
+import { AuthProvider, useAuth } from './AuthContext';
 
 
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
@@ -23,7 +22,7 @@ const Tab = createBottomTabNavigator();
 
 function AuthStack() {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator screenOptions={{ headerShown: false, animation: 'fade' }}>
       <Stack.Screen name='login' component={LoginPage} ></Stack.Screen>
       <Stack.Screen name='signup' component={SignUpPage} ></Stack.Screen>
     </Stack.Navigator>
@@ -32,7 +31,7 @@ function AuthStack() {
 
 function AppTabs() {
   return (
-    <Tab.Navigator screenOptions={{ headerShown: false }} initialRouteName={'avatarpage'}>
+    <Tab.Navigator screenOptions={{ headerShown: false, animation: 'fade' }} initialRouteName={'avatarpage'}>
       <Tab.Screen name='entrylist' 
         component={EntryList}
         options={{
@@ -60,6 +59,20 @@ function AppTabs() {
           },
         }}
          />
+      <Tab.Screen name='profilepage' 
+        component={ProfilePage} 
+        options={{
+          tabBarShowLabel: false,
+          tabBarIcon: ({ focused, size }) => {
+            return(
+              <MaterialCommunityIcons
+                name={focused ? 'emoticon-cool' : 'emoticon-cool-outline'} 
+                size={30} 
+                color={'black'} />
+            )
+          },
+        }}
+      />
     </Tab.Navigator>
   )
 }
