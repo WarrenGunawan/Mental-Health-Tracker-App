@@ -1,6 +1,5 @@
 import { Text, View, StyleSheet, TouchableOpacity, Modal } from 'react-native';
 
-
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import Octicons from '@expo/vector-icons/Octicons';
 
@@ -47,6 +46,7 @@ const styles = StyleSheet.create({
         width: '100%',
         padding: 10,
         alignItems: 'center',
+
     },
 });
 

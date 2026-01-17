@@ -1,4 +1,5 @@
-import { StyleSheet, Text, TouchableOpacity, View, ScrollView, SafeAreaView } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View, ScrollView } from "react-native";
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from "@react-navigation/core";
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -20,7 +21,7 @@ const EntryList = () => {
         <SafeAreaView style={styles.container}>
             <TopBar />
             
-            <LinearGradient colors={['rgba(0,0,0,0.35)', 'transparent']} start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }} style={{ height: 5, width: '100%' }} />
+            <LinearGradient colors={['#FFFFFF', 'transparent']} start={{ x: 0, y: 0 }} end={{ x: 0, y: 0.04 }} style={{ height: 5, width: '100%' }} />
 
             <ScrollView style={styles.scrollContainer} 
                 contentContainerStyle={{ alignItems: 'center' }}

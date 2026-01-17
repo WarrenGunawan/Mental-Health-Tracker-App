@@ -1,13 +1,13 @@
-import { StyleSheet, Text, TouchableOpacity, View, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useState, useEffect, useMemo } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { db } from '../../firebase';
 import { setDoc, doc, serverTimestamp, getDoc } from 'firebase/firestore';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import SignOutButton from '../../Components/SignOutButton';
 import DetailedEntryView from '../../Components/DetailedEntryView';
 import ImageMoodDisplay from '../../Components/ImageMoodDisplay';
 import SubmittedDetailedEntryView from '../../Components/SubmittedDetailedEntryView';
@@ -147,7 +147,7 @@ const AvatarPage = () => {
 
             {/* <View style={{ color: 'black', width: '100%', borderWidth: 1 }}/> */}
 
-            <LinearGradient colors={['rgba(0,0,0,0.35)', 'transparent']} start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }} style={{ height: 5, width: '100%' }} />
+            <LinearGradient colors={['#FFFFFF', 'transparent']} start={{ x: 0, y: 0 }} end={{ x: 0, y: 0.04 }} style={{ height: 5, width: '100%' }} />
 
             <View style={styles.avatarContainer}>
                 {/* <View style={{ flexDirection: 'row', columnGap: 2, marginLeft: -5 }}>
@@ -172,9 +172,7 @@ const AvatarPage = () => {
                 ))}
             </View> */}
 
-            
-            <LinearGradient colors={['rgba(0,0,0,0.35)', 'transparent']} start={{ x: 0, y: 1 }} end={{ x: 0, y: 0 }} style={{ height: 5, width: '100%', marginTop: 5 }} />
-
+        
 
             <View style={[{ flexDirection: 'col' }, styles.inputContainer]}>
                 <Text style={styles.statusText}>{dailyMessage}</Text>
