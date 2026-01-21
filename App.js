@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
@@ -86,11 +86,20 @@ function RootNavigator() {
 }
 
 
+const AppTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    background: 'white', 
+  },
+};
+
+
 export default function App() {
 
   return (
     <AuthProvider>
-      <NavigationContainer>
+      <NavigationContainer theme={AppTheme}>
         <RootNavigator/>
       </NavigationContainer>
     </AuthProvider>
