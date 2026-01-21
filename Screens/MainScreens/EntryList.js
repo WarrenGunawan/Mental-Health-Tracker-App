@@ -29,9 +29,9 @@ const EntryList = () => {
                 showsHorizontalScrollIndicator={false}
                 bounces={true}> 
                 
-                <Text style={[{ fontSize: 60, fontWeight: 'bold', marginTop: 10 }]}>Entry List</Text>
+                <Text style={[{ fontSize: 60, fontWeight: 'bold', marginTop: 0 }]}>Entry List</Text>
                 
-                <View style={[{ backgroundColor: 'rgba(0,0,0,0.5)', height: 3, width: 350, borderRadius: 3, marginTop: 20, marginBottom: 10 }]}/>
+                <View style={[{ backgroundColor: 'rgba(0,0,0,0.5)', height: 3, width: 350, borderRadius: 3, marginTop: 10, marginBottom: 10 }]}/>
 
                 <View style={styles.entries}>
                     <EntryListBox/>

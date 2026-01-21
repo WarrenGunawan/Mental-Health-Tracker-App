@@ -14,9 +14,9 @@ function TopBar() {
 
     return (
         <>
-            <View style={{ position: 'absolute', top: 50, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+            <View style={{ position: 'absolute', top: 50, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', zIndex: 9999 }}>
                 <Text style={{ fontSize: 20 }}>InnerHue </Text>
-                <MaterialCommunityIcons name="bread-slice-outline" size={20} color="black" />
+                <MaterialCommunityIcons name='bread-slice-outline' size={20} color='black' />
             </View>
             <View style={styles.topContainer}>
                 <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => setSelectedOptions(true)}>
@@ -29,9 +29,9 @@ function TopBar() {
             <Modal
                 visible={selectedOptions}
                 transparent
-                animationType="fade"
+                animationType='fade'
                 >
-                <View style={{ flex: 1, backgroundColor: "rgba(0,0,0,0.25)" }}>
+                <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.25)' }}>
                     <SignOutButton onClose={() => setSelectedOptions(false)} />
                 </View>
             </Modal>
@@ -47,6 +47,7 @@ const styles = StyleSheet.create({
         padding: 10,
         alignItems: 'center',
 
+        backgroundColor: 'white',
     },
 });
 

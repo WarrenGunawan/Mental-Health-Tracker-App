@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, KeyboardAvoidingView } from 'react-native';
 import { useState, useEffect, useMemo } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -148,60 +148,59 @@ const AvatarPage = () => {
             {/* <View style={{ color: 'black', width: '100%', borderWidth: 1 }}/> */}
 
             <LinearGradient colors={['#FFFFFF', 'transparent']} start={{ x: 0, y: 0 }} end={{ x: 0, y: 0.04 }} style={{ height: 5, width: '100%' }} />
+                <View style={styles.avatarContainer}>
+                    {/* <View style={{ flexDirection: 'row', columnGap: 2, marginLeft: -5 }}>
+                        {[...Array(3)].map((_, i) => (
+                            <Text key={i} style={{ fontSize: 70 }}>•</Text>
+                        ))}
+                    </View> */}
 
-            <View style={styles.avatarContainer}>
-                {/* <View style={{ flexDirection: 'row', columnGap: 2, marginLeft: -5 }}>
-                    {[...Array(3)].map((_, i) => (
+                    <Text style={[{ fontSize: 60, fontWeight: 'bold', marginVertical: 10 }]}>Avatar</Text>
+
+                    {/* <View style={{ flexDirection: 'row', columnGap: 2, marginRight: -5 }}>
+                        {[...Array(3)].map((_, i) => (
+                            <Text key={i} style={{ fontSize: 70 }}>•</Text>
+                        ))}
+                    </View> */}
+                </View>
+                <ImageMoodDisplay selectedValue={selectedValue}/>
+
+                {/* <View style={{ flexDirection: 'row', columnGap: 2, width: '100%', justifyContent: 'center', marginTop: -40, marginBottom: -20  }}>
+                    {[...Array(30)].map((_, i) => (
                         <Text key={i} style={{ fontSize: 70 }}>•</Text>
                     ))}
                 </View> */}
 
-                <Text style={[{ fontSize: 60, fontWeight: 'bold', marginVertical: 10 }]}>Avatar</Text>
+            
 
-                {/* <View style={{ flexDirection: 'row', columnGap: 2, marginRight: -5 }}>
-                    {[...Array(3)].map((_, i) => (
-                        <Text key={i} style={{ fontSize: 70 }}>•</Text>
-                    ))}
-                </View> */}
-            </View>
-            <ImageMoodDisplay selectedValue={selectedValue}/>
+                <View style={[{ flexDirection: 'col' }, styles.inputContainer]}>
+                    <Text style={styles.statusText}>{dailyMessage}</Text>
 
-            {/* <View style={{ flexDirection: 'row', columnGap: 2, width: '100%', justifyContent: 'center', marginTop: -40, marginBottom: -20  }}>
-                {[...Array(30)].map((_, i) => (
-                    <Text key={i} style={{ fontSize: 70 }}>•</Text>
-                ))}
-            </View> */}
-
-        
-
-            <View style={[{ flexDirection: 'col' }, styles.inputContainer]}>
-                <Text style={styles.statusText}>{dailyMessage}</Text>
-
-                <TouchableOpacity style={{ width: '100%', alignItems: 'center', justifyContent: 'center' }} onPress={() => {setEntryQuestions(true)}}>
-                    <Text style={[ styles.dailyEntryButton, { fontSize: 26, fontWeight: 'bold', padding: 20, paddingHorizontal: 85 }]}>{submittedToday? 'View Entry' : 'Daily Entry'}</Text>
-                </TouchableOpacity>
-            </View>
+                    <TouchableOpacity style={{ width: '100%', alignItems: 'center', justifyContent: 'center' }} onPress={() => {setEntryQuestions(true)}}>
+                        <Text style={[ styles.dailyEntryButton, { fontSize: 26, fontWeight: 'bold', padding: 20, paddingHorizontal: 85 }]}>{submittedToday? 'View Entry' : 'Daily Entry'}</Text>
+                    </TouchableOpacity>
+                </View>
 
 
 
 
 
-            {entryQuestions && (
-                submittedToday ? (
-                    <SubmittedDetailedEntryView onClose={() => setEntryQuestions(false)}
-                        formattedDate={formattedDate}
-                        moodOptions={moodOptions}
-                        mood={todayEntry.mood}
-                        notes={todayEntry.notes} />
-                ) : (
-                    <DetailedEntryView onClose={() => setEntryQuestions(false)} 
-                        onSubmit={handleEntrySubmit}
-                        selectedValue={selectedValue} 
-                        setSelectedValue={setSelectedValue}
-                        formattedDate={formattedDate}
-                        moodOptions={moodOptions} />
-                )
-            )}
+                {entryQuestions && (
+                    submittedToday ? (
+                        <SubmittedDetailedEntryView onClose={() => setEntryQuestions(false)}
+                            formattedDate={formattedDate}
+                            moodOptions={moodOptions}
+                            mood={todayEntry.mood}
+                            notes={todayEntry.notes} />
+                    ) : (
+                        <DetailedEntryView onClose={() => setEntryQuestions(false)} 
+                            onSubmit={handleEntrySubmit}
+                            selectedValue={selectedValue} 
+                            setSelectedValue={setSelectedValue}
+                            formattedDate={formattedDate}
+                            moodOptions={moodOptions} />
+                    )
+                )}
 
         </SafeAreaView>
 
@@ -232,7 +231,6 @@ const styles = StyleSheet.create({
         borderRadius: 30,
         borderColor: 'rgba(0,0,0,0.05)',
         backgroundColor: 'rgba(0,0,0,0.1)',
-        marginVertical: 20,
         width: '90%',
 
         alignItems: 'center',
@@ -251,6 +249,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     
+    statusText: {
+        marginBottom: 60,
+    },
 })
 
 export default AvatarPage;

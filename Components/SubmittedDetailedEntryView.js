@@ -12,11 +12,7 @@ function DetailedEntryView({ onClose, formattedDate, moodOptions, mood, notes })
 
     return (
         <View style={styles.detailedDailyEntryScreen}>
-            <Pressable style={styles.backdrop} onPress={onClose} />
-
-            <TouchableOpacity onPress={onClose} style={{ alignSelf: 'flex-start', marginLeft: 'auto', marginRight: 30, marginBottom: 20 }}>
-                <Entypo name='circle-with-cross' size={67} color='white' />
-            </TouchableOpacity>       
+            <Pressable style={styles.backdrop} onPress={onClose} />     
 
             <View style={[{ backgroundColor: 'white', padding: 30, borderRadius: 30, justifyContent: 'center', alignItems: 'center'  }]}>     
                 <Text style={{fontSize: 45, marginBottom: 20  }}>{formattedDate} Entry</Text>
@@ -59,6 +55,10 @@ function DetailedEntryView({ onClose, formattedDate, moodOptions, mood, notes })
                         multiline
                     />
                 </View>
+
+                <TouchableOpacity onPress={onClose}>
+                    <Text style={[styles.submitButtonOpposite, { padding: 10, fontSize: 20, fontWeight: 'bold', paddingHorizontal: 30, marginLeft: 5 }]}>Exit</Text>
+                </TouchableOpacity>
             </View>
         </View>
     )
@@ -69,6 +69,18 @@ const SIZE = 80;
 const GAP = 16;
 
 const styles = StyleSheet.create({
+    submitButtonOpposite: {
+        borderWidth: 5,
+        borderColor: 'rgba(0,0,0,0.35)',
+        borderRadius: 20,
+        backgroundColor: 'white',
+
+        color: 'rgba(0,0,0,0.67)',
+
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+
     detailedDailyEntry: {
         justifyContent: 'center',
         alignItems: 'center',
