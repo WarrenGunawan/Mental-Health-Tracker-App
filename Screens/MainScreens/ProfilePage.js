@@ -19,7 +19,7 @@ const ProfilePage = () => {
 
 
             <View style={styles.profileContainer}>
-                <Text>Tpop</Text>
+                <Text>Profile</Text>
             </View>
         </SafeAreaView>
     )
@@ -31,13 +31,19 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        
     },
 
     profileContainer: {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+
+        marginTop: 35,
+        width: '80%',
+
+        backgroundColor: 'rgba(0,0,0,0.1)',
+
+        borderRadius: 40,
     },
 })
 
