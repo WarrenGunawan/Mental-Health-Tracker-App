@@ -6,7 +6,7 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "fire
 import { auth } from '../../firebase';
 
 
-import AntDesign from '@expo/vector-icons/AntDesign';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
 const SignUpPage = () => {
 
@@ -29,7 +29,7 @@ const SignUpPage = () => {
         <KeyboardAvoidingView style={styles.container} behavior='padding'> 
             <View style={[{ flexDirection: 'row', marginBottom: 20, }]}>
                     <Text style={[{ fontSize: 60 }]}>InnerHue </Text>
-                    <AntDesign name="aliwangwang" size={70} color="black" />
+                    <MaterialCommunityIcons name="bread-slice-outline" size={70} color="black" />
                 </View>
             
                 <View style={[{ backgroundColor: 'rgba(0,0,0,0.5)', height: 3, width: 350, borderRadius: 3, marginBottom: 50}]}/>

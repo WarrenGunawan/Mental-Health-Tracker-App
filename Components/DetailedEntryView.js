@@ -62,7 +62,7 @@ function DetailedEntryView({ onClose, onSubmit ,selectedValue, setSelectedValue,
                 <View style={styles.detailedDailyEntry}>
                     <TextInput style={styles.textInputDailyEntry} 
                         placeholder={'Additional Notes...'} 
-                        placeholderTextColor={'rgba(0,0,0,0.5)'} 
+                        placeholderTextColor={'#999999'} 
                         multiline
                         onChange={(text) => {setNotes(text)}}/>
                 </View>
@@ -87,12 +87,10 @@ const GAP = 16;
 
 const styles = StyleSheet.create({
     submitButton: {
-        borderWidth: 0,
-        borderColor: 'rgba(0,0,0,0.2)',
         borderRadius: 20,
-        backgroundColor: 'rgba(0,0,0,0.2)',
+        backgroundColor: '#DDDDDD',
 
-        color: 'rgba(0,0,0,0.6)',
+        color: '#666666',
 
         justifyContent: 'center',
         alignItems: 'center',
@@ -100,11 +98,11 @@ const styles = StyleSheet.create({
 
     submitButtonOpposite: {
         borderWidth: 5,
-        borderColor: 'rgba(0,0,0,0.35)',
+        borderColor: '#DDDDDD',
         borderRadius: 20,
         backgroundColor: 'white',
 
-        color: 'rgba(0,0,0,0.67)',
+        color: '#666666',
 
         justifyContent: 'center',
         alignItems: 'center',
@@ -130,7 +128,7 @@ const styles = StyleSheet.create({
         padding: 10,
         marginVertical: 30,
 
-        backgroundColor: 'rgba(0,0,0,0.2)',
+        backgroundColor: '#DDDDDD',
         borderRadius: 15,
     },
 

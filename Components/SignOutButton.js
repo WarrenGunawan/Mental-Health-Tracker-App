@@ -15,7 +15,6 @@ function SignOutButton({ onClose }) {
 
     return (
     <View style={styles.overlay}>
-      {/* tap outside to close */}
       <Pressable style={styles.backdrop} onPress={onClose} />
 
       <View style={styles.panel}>
@@ -39,21 +38,19 @@ const styles = StyleSheet.create({
   },
   panel: {
     width: '80%',
-    borderRadius: 16,
-    padding: 16,
+    borderRadius: 20,
+    padding: 50,
     backgroundColor: 'white',
     alignItems: 'center',
   },
   button: {
-    borderWidth: 2,
-    borderColor: 'rgba(0,0,0,0.35)',
-    borderRadius: 10,
-    backgroundColor: 'rgba(0,0,0,0.2)',
-    paddingHorizontal: 30,
-    paddingVertical: 10,
+    borderRadius: 15,
+    backgroundColor: '#DDDDDD',
+    paddingHorizontal: 40,
+    paddingVertical: 15,
   },
   buttonText: {
-    color: 'rgba(0,0,0,0.7)',
+    color: '#666666',
     fontWeight: '600',
   },
 });

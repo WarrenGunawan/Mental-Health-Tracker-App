@@ -71,11 +71,11 @@ const GAP = 16;
 const styles = StyleSheet.create({
     submitButtonOpposite: {
         borderWidth: 5,
-        borderColor: 'rgba(0,0,0,0.35)',
+        borderColor: '#DDDDDD',
         borderRadius: 20,
         backgroundColor: 'white',
 
-        color: 'rgba(0,0,0,0.67)',
+        color: '#666666',
 
         justifyContent: 'center',
         alignItems: 'center',
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
         padding: 10,
         marginVertical: 30,
 
-        backgroundColor: 'rgba(0,0,0,0.2)',
+        backgroundColor: '#DDDDDD',
         borderRadius: 15,
     },
 

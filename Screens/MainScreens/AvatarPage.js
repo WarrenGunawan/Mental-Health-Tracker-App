@@ -227,10 +227,8 @@ const styles = StyleSheet.create({
     inputContainer: {
         flex: 1,
         padding: 20,
-        borderWidth: 1,
         borderRadius: 30,
-        borderColor: 'rgba(0,0,0,0.05)',
-        backgroundColor: 'rgba(0,0,0,0.1)',
+        backgroundColor: '#DDDDDD',
         width: '90%',
 
         alignItems: 'center',
@@ -238,12 +236,10 @@ const styles = StyleSheet.create({
     },
 
     dailyEntryButton: {
-        borderWidth: 1,
-        borderColor: 'rgba(0,0,0,0.1)',
         borderRadius: 20,
-        backgroundColor: 'rgba(0,0,0,0.2)',
+        backgroundColor: '#BBBBBB',
 
-        color: 'rgba(0,0,0,0.6)',
+        color: '#666666',
 
         justifyContent: 'center',
         alignItems: 'center',

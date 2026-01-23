@@ -36,13 +36,13 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginVertical: 10,
         marginLeft: 10,
-        backgroundColor: 'rgba(0,0,0,0.1)',
+        backgroundColor: '#DDDDDD',
         borderRadius: 15,
 
     },
 
     date: {
-        color: 'rgba(0,0,0,0.5)',
+        color: '#666666',
         marginLeft: 20,
     },
 
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     },
 
     textContainer: {
-        backgroundColor: 'rgba(0,0,0,0.1)',
+        backgroundColor: '#BBBBBB',
 
         flex: 1,
         alignItems: 'center',
