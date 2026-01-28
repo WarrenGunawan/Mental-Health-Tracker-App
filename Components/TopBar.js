@@ -3,14 +3,14 @@ import { Text, View, StyleSheet, TouchableOpacity, Modal } from 'react-native';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import Octicons from '@expo/vector-icons/Octicons';
 
-import SignOutButton from './SignOutButton';
+import Options from './Options';
 import { useState } from 'react';
 
 
 
 function TopBar() {
 
-    const[ selectedOptions, setSelectedOptions ] = useState(false);
+    const [ selectedOptions, setSelectedOptions ] = useState(false);
 
     return (
         <>
@@ -32,7 +32,7 @@ function TopBar() {
                 animationType='fade'
                 >
                 <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.25)' }}>
-                    <SignOutButton onClose={() => setSelectedOptions(false)} />
+                    <Options onClose={() => setSelectedOptions(false)} />
                 </View>
             </Modal>
         </>
