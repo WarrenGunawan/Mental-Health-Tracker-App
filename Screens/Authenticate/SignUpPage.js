@@ -2,8 +2,9 @@ import { StyleSheet, Text, TouchableOpacity, View, KeyboardAvoidingView, TextInp
 import { useNavigation } from "@react-navigation/core";
 import { useState, useEffect } from 'react';
 
+import { doc, setDoc, getDoc} from 'firebase/firestore';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from '../../firebase';
+import { db, auth } from '../../firebase';
 
 
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
@@ -12,16 +13,30 @@ const SignUpPage = () => {
 
     const navigation = useNavigation();
 
+    const [ name, setName ] = useState();
+    const [ username, setUsername ] = useState();
     const [ email, setEmail ] = useState();
     const [ password, setPassword ] = useState();
 
-    const handleSignUp = () => {
+    const bio = 'No Bio.';
+
+    const createUser = async (user) => {
+        await setDoc(doc(db, 'users', user.uid), {
+            name, 
+            username,
+            email,
+            bio,
+        }) 
+    }
+
+    const handleSignUp = async () => {
         createUserWithEmailAndPassword(auth, email, password).then(userCredentials => {
             const user = userCredentials.user;
-            console.log('Registered with:', user.email);
-        })
-        .catch(error => alert(error.message))};
+            console.log('Signed in with:', user.email);
 
+            createUser(user);
+        })
+        .catch(err => alert(err.message))};
 
     return (
 
@@ -38,7 +53,18 @@ const SignUpPage = () => {
                     <Text>Enjoy Your Stay!</Text>
                 </View>
             
-                <TextInput style={styles.textInputStyle} placeholder='Name' placeholderTextColor='rgba(0,0,0,0.5)' autoCorrect={false}/>
+                <TextInput style={styles.textInputStyle} 
+                    placeholder='Name' 
+                    placeholderTextColor='rgba(0,0,0,0.5)' 
+                    onChangeText={text => {setName(text)}} 
+                    autoCorrect={false}
+                    autoCapitalize='true'/>
+                <TextInput style={styles.textInputStyle} 
+                    placeholder='Username' 
+                    placeholderTextColor='rgba(0,0,0,0.5)' 
+                    onChangeText={text => {setUsername(text)}} 
+                    autoCorrect={false}
+                    autoCapitalize='false'/>
                 <TextInput style={styles.textInputStyle} 
                     placeholder='Email' 
                     placeholderTextColor='rgba(0,0,0,0.5)' 
