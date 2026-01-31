@@ -14,7 +14,6 @@ const ProfileView = () => {
     const [ username, setUsername] = useState();
     const [ bio, setBio ] = useState();
 
-    const user = auth.currentUser;
     
     useEffect(() => {
         const user = auth.currentUser;

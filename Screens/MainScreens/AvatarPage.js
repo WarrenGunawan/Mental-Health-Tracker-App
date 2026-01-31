@@ -3,7 +3,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { db } from '../../firebase';
+import { db, auth } from '../../firebase';
 import { setDoc, doc, serverTimestamp, getDoc } from 'firebase/firestore';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -92,11 +92,6 @@ const AvatarPage = () => {
 
     const dailyMessage = submittedToday ? 'Thank you for submitting your entry' : 'Please fill out your entry';
 
-
-    const [ selectedOptions, setSelectedOptions ] = useState(false);
-
-
-
     const { user } = useAuth();
     const uid = user?.uid;
 
@@ -113,9 +108,6 @@ const AvatarPage = () => {
         setTodayEntry(newEntry);
 
 
-        const snap = await getDoc(entryRef);
-        const isNew = !snap.exists();
-
         const entryRef = doc(db, 'users', uid, 'entries', keyToday);
         await setDoc(
             entryRef,
@@ -124,7 +116,6 @@ const AvatarPage = () => {
                 mood,            
                 notes,             
                 updatedAt: serverTimestamp(),
-                ...(isNew ? { createdAt: serverTimestamp() } : {}),
             },
             {merge: true}
         );

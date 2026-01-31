@@ -5,7 +5,7 @@ import Entypo from '@expo/vector-icons/Entypo';
 
 
 
-function DetailedEntryView({ onClose, onSubmit ,selectedValue, setSelectedValue, formattedDate, moodOptions }) {
+function DetailedEntryView({ onClose, onSubmit, selectedValue, setSelectedValue, formattedDate, moodOptions }) {
     const [notes, setNotes] = useState("");
 
     const handleSubmit = () => {
