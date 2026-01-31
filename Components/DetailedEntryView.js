@@ -118,6 +118,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         ...StyleSheet.absoluteFillObject,
+        zIndex: 10,
     },
 
     textInputDailyEntry: {
