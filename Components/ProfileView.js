@@ -1,22 +1,46 @@
 import { View, Text, Image, StyleSheet } from 'react-native';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+
+import { db, auth } from '../firebase.js';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
 
 import Wooper from '../assets/images/wooper.png';
 
 
 const ProfileView = () => {
     
+    
+    const [ name, setName ] = useState();
+    const [ username, setUsername] = useState();
+    const [ bio, setBio ] = useState();
+
+    const user = auth.currentUser;
+    
+    useEffect(() => {
+        const user = auth.currentUser;
+
+        const loadString = async () => {
+            const snap = await getDoc(doc(db, 'users', user.uid));
+            if (snap.exists()) {
+                setName(snap.data().name);
+                setUsername(snap.data().username);
+                setBio(snap.data().bio);
+            }
+        };
+
+        loadString(user);
+    }, []);
 
 
     return (
         <View style={styles.profileContainer}>
             <Image source={Wooper} style={styles.pfp}/>
-            <Text style={styles.username}>Super Funny Username</Text>
-            <Text style={styles.name}>Warren Gunawan</Text>
+            <Text style={styles.username}>{username}</Text>
+            <Text style={styles.name}>{name}</Text>
             <View style={styles.informationContainer}> 
                 <Text style={styles.aboutMeTitle}>About Me!</Text>
                 <View>
-                    <Text style={styles.aboutMe}>Placeholder text, this is all about me. </Text>
+                    <Text style={styles.aboutMe}>{bio}</Text>
                 </View>
             </View>
         </View>
@@ -46,7 +70,7 @@ const styles = StyleSheet.create({
     },
 
     username: {
-        fontSize: 25,
+        fontSize: 30,
         marginTop: 10,
     },
 
@@ -58,6 +82,7 @@ const styles = StyleSheet.create({
     informationContainer: {
         flex: 1,
         justifyContent: 'center',
+        alignItems: 'center',
 
         backgroundColor: '#BBBBBB',
         borderRadius: 20,
@@ -76,7 +101,7 @@ const styles = StyleSheet.create({
     },
 
     aboutMe: {
-        fontSize: 15,
+        fontSize: 20,
         paddingHorizontal: 20,
         paddingBottom: 20,
     },
