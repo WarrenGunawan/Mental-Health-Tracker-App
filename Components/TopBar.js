@@ -14,7 +14,7 @@ function TopBar() {
 
     return (
         <>
-            <View style={{ position: 'absolute', top: 50, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', zIndex: 9999 }}>
+            <View style={{ position: 'absolute', top: 50, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', zIndex: 1 }}>
                 <Text style={{ fontSize: 20 }}>InnerHue </Text>
                 <MaterialCommunityIcons name='bread-slice-outline' size={20} color='black' />
             </View>
