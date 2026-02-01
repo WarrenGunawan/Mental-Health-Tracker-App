@@ -3,8 +3,8 @@ import { useState, useEffect, useMemo } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { db, auth } from '../../firebase';
-import { setDoc, doc, serverTimestamp, getDoc } from 'firebase/firestore';
+import { db } from '../../firebase';
+import { collection, getDocs, query, where, orderBy, doc, setDoc, serverTimestamp } from 'firebase/firestore';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -65,16 +65,113 @@ const AvatarPage = () => {
         const y = d.getFullYear();
         const m = String(d.getMonth() + 1).padStart(2, '0');
         const day = String(d.getDate()).padStart(2, '0');
-        return `${y}-${m}-${day}`; // e.g. 2025-12-31
+        return `${y}-${m}-${day}`; 
     };
+
+
+
+
+    const toDateKey = (d) => {
+        const y = d.getFullYear();
+        const m = String(d.getMonth() + 1).padStart(2, '0');
+        const day = String(d.getDate()).padStart(2, '0');
+        return `${y}-${m}-${day}`;
+    };
+
+    const startOfWeekSunday = (date = new Date()) => {
+        const d = new Date(date);
+        d.setHours(0, 0, 0, 0);
+        const day = d.getDay(); 
+        d.setDate(d.getDate() - day);
+        return d;
+    };
+
+    const getWeekKeys = (date = new Date()) => {
+        const start = startOfWeekSunday(date);
+        return Array.from({ length: 7 }, (_, i) => {
+            const d = new Date(start);
+            d.setDate(start.getDate() + i);
+            return toDateKey(d);
+        });
+    };
+
+    const getNextWeekStartKey = (date = new Date()) => {
+        const start = startOfWeekSunday(date);
+        const next = new Date(start);
+        next.setDate(start.getDate() + 7);
+        return toDateKey(next);
+    };
+
+    const colorForMood = (mood) => {
+        const m = Number(mood);
+        return (
+            moodOptions.find(o => o.value === m)?.color ||
+            moodOptions.find(o => o.id === m)?.color ||
+            "white"
+        );
+    };
+
+
+
+
 
     const { user } = useAuth();
     const uid = user?.uid;
+    const keyToday = todayKey();
 
 
     const ENTRY_STORAGE_KEY = uid ? `entry:${uid}/${keyToday}` : null;
 
     const [todayEntry, setTodayEntry] = useState(null); 
+
+
+
+    const [weekSlots, setWeekSlots] = useState(() =>
+        getWeekKeys().map(dateKey => ({ dateKey, mood: null }))
+    );
+
+
+
+    useEffect(() => {
+        if (!uid) return;
+
+        const loadWeek = async () => {
+            try {
+                const weekKeys = getWeekKeys();
+                const weekStart = weekKeys[0];              
+                const nextWeekStart = getNextWeekStartKey();
+
+                const weekQuery = query(
+                    collection(db, 'users', uid, 'entries'),
+                    where('dateKey', '>=', weekStart),
+                    where('dateKey', '<', nextWeekStart),
+                    orderBy('dateKey', 'asc')
+                );
+
+                const snap = await getDocs(weekQuery);
+
+                const map = new Map();
+                snap.forEach(docSnap => {
+                    const data = docSnap.data();
+                    map.set(data?.dateKey ?? docSnap.id, data);
+                });
+
+                setWeekSlots(
+                    weekKeys.map(k => ({
+                    dateKey: k,
+                    mood: map.get(k)?.mood ?? null,
+                    }))
+                );
+            } catch (e) {
+                console.log('Failed to load week entries:', e);
+            }
+        };
+
+        loadWeek();
+    }, [uid, keyToday]);
+
+
+
 
     useEffect(() => {
         if (!ENTRY_STORAGE_KEY) return;
@@ -92,10 +189,9 @@ const AvatarPage = () => {
     }, [ENTRY_STORAGE_KEY]);
 
 
-    const keyToday = todayKey();
     const submittedToday = todayEntry?.dateKey === keyToday;
 
-    const dailyMessage = submittedToday ? 'Thank you for submitting your entry' : 'Please fill out your entry';
+    const dailyMessage = submittedToday ? 'Thank you for submitting your entry' : '* Don\'t forget to fill out your entry *';
 
     const handleEntrySubmit = async ({ mood, notes }) => {
         if (submittedToday) return; 
@@ -122,12 +218,13 @@ const AvatarPage = () => {
 
         await AsyncStorage.setItem(ENTRY_STORAGE_KEY, JSON.stringify(newEntry));
 
+        setWeekSlots(prev =>
+            prev.map(s => (s.dateKey === keyToday ? { ...s, mood } : s))
+        );
+
         setSelectedValue(mood);
         setEntryQuestions(false);
     }
-
-
-
 
 
 
@@ -144,6 +241,30 @@ const AvatarPage = () => {
                 <ImageMoodDisplay selectedValue={selectedValue}/>
 
                 <View style={[{ flexDirection: 'col' }, styles.inputContainer]}>
+                    <Text style={{ color: '#666666' }}>Moods of the Week!</Text>
+
+                    <View style={styles.weekRow}>
+                        {weekSlots.map((slot) => (
+                            <View
+                            key={slot.dateKey}
+                            style={[
+                                styles.weekSlot,
+                                { backgroundColor: slot.mood ? colorForMood(slot.mood) : 'white' },
+                            ]}
+                            />
+                        ))}
+                        </View>
+
+                        <View style={styles.weekLabelsRow}>
+                        {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((d, i) => (
+                            <Text key={i} style={styles.weekLabel}>{d}</Text>
+                        ))}
+                    </View>
+
+
+                    <View style={{ flex: 1 }} />  
+
+
                     <Text style={styles.statusText}>{dailyMessage}</Text>
 
                     <TouchableOpacity style={{ width: '100%', alignItems: 'center', justifyContent: 'center' }} onPress={() => {setEntryQuestions(true)}}>
@@ -218,8 +339,41 @@ const styles = StyleSheet.create({
     },
     
     statusText: {
-        marginBottom: 60,
+        color: '#666666',
+        paddingBottom: 35,
     },
+
+    weekRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '95%',
+        alignSelf: 'center',
+        marginTop: 12,
+    },
+
+    weekSlot: {
+        width: 38,
+        height: 38,
+        borderRadius: 10,
+        borderWidth: 3,
+        borderColor: 'rgba(0,0,0,0.2)',
+    },
+
+    weekLabelsRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '95%',
+        alignSelf: 'center',
+        marginTop: 6,
+    },
+
+    weekLabel: {
+        width: 38,
+        textAlign: 'center',
+        fontSize: 12,
+        opacity: 0.6,
+    },
+
 })
 
 export default AvatarPage;
