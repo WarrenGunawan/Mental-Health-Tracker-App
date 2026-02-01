@@ -22,7 +22,7 @@ const Tab = createBottomTabNavigator();
 
 function AuthStack() {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false, animation: 'fade' }}>
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name='login' component={LoginPage} ></Stack.Screen>
       <Stack.Screen name='signup' component={SignUpPage} ></Stack.Screen>
     </Stack.Navigator>
@@ -31,7 +31,7 @@ function AuthStack() {
 
 function AppTabs() {
   return (
-    <Tab.Navigator screenOptions={{ headerShown: false, animation: 'fade' }} initialRouteName={'avatarpage'}>
+    <Tab.Navigator screenOptions={{ headerShown: false }} initialRouteName={'avatarpage'}>
       <Tab.Screen name='entrylist' 
         component={EntryList}
         options={{
