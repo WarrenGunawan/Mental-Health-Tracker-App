@@ -28,13 +28,13 @@ function EntryListBox({ entry }) {
                 <Text style={styles.date}>{shortDate}</Text>
             </View>
 
-            <View style={[ styles.container, { width: (width / 2) - 15, height: 120 }]}>
+            <View style={[ styles.container, { width: (width / 2) - 15, height: 130 }]}>
 
                 <View style={styles.boxContent}>
                     <View style={[styles.circle, { backgroundColor: color }]}/>
 
                     <View style={styles.textContainer}>
-                        <Text style={{ margin: 10 }}>{notes}</Text>
+                        <Text style={{ margin: 10 }} numberOfLines={5} ellipsizeMode="tail">{notes}</Text>
                     </View>
                 </View>
             </View>
