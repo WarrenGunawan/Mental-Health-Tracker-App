@@ -44,18 +44,17 @@ const AvatarPage = () => {
         date += 'th';
     }
 
-    const formattedDateWithYear = `${month} ${date} ${year}`;
     const formattedDate = `${month} ${date}`;
 
 
     const[entryQuestions, setEntryQuestions] = useState(false);
 
     const moodOptions = [
-        { id: 1, color: '#0aefff', value: 1 },
-        { id: 2, color: '#deff0a', value: 3 },
-        { id: 3, color: '#ff0000', value: 5 },
-        { id: 4, color: '#0aff99', value: 2 },
-        { id: 5, color: '#ff8700', value: 4 },
+        { id: 1, color: '#36CEDC', value: 1 },
+        { id: 2, color: '#FFEA56', value: 3 },
+        { id: 3, color: '#FE797B', value: 5 },
+        { id: 4, color: '#8FE968', value: 2 },
+        { id: 5, color: '#FFB750', value: 4 },
     ];
 
     const [selectedValue, setSelectedValue] = useState(null);
@@ -69,31 +68,34 @@ const AvatarPage = () => {
         return `${y}-${m}-${day}`; // e.g. 2025-12-31
     };
 
+    const { user } = useAuth();
+    const uid = user?.uid;
 
-    const ENTRY_STORAGE_KEY = 'today_entry_v1';
+
+    const ENTRY_STORAGE_KEY = uid ? `entry:${uid}/${keyToday}` : null;
 
     const [todayEntry, setTodayEntry] = useState(null); 
 
     useEffect(() => {
-    const loadEntry = async () => {
-        try {
-        const raw = await AsyncStorage.getItem(ENTRY_STORAGE_KEY);
-        if (raw) setTodayEntry(JSON.parse(raw));
-        } catch (e) {
-        console.log('Failed to load entry:', e);
-        }
-    };
-    loadEntry();
-    }, []);
+        if (!ENTRY_STORAGE_KEY) return;
+
+        const loadEntry = async () => {
+            try {
+                const raw = await AsyncStorage.getItem(ENTRY_STORAGE_KEY);
+                setTodayEntry(raw ? JSON.parse(raw) : null);
+            } catch (e) {
+                console.log('Failed to load entry:', e);
+            }
+        };
+
+        loadEntry();
+    }, [ENTRY_STORAGE_KEY]);
 
 
     const keyToday = todayKey();
     const submittedToday = todayEntry?.dateKey === keyToday;
 
     const dailyMessage = submittedToday ? 'Thank you for submitting your entry' : 'Please fill out your entry';
-
-    const { user } = useAuth();
-    const uid = user?.uid;
 
     const handleEntrySubmit = async ({ mood, notes }) => {
         if (submittedToday) return; 
@@ -107,12 +109,10 @@ const AvatarPage = () => {
 
         setTodayEntry(newEntry);
 
-
-        const entryRef = doc(db, 'users', uid, 'entries', keyToday);
-        await setDoc(
-            entryRef,
+        await setDoc(doc(db, 'users', uid, 'entries', keyToday),
             {
-                dateKey: keyToday,           
+                dateKey: keyToday,
+                shortDate: formattedDate,           
                 mood,            
                 notes,             
                 updatedAt: serverTimestamp(),
@@ -135,34 +135,13 @@ const AvatarPage = () => {
     return (
         <SafeAreaView style={styles.container} > 
             <TopBar />
-
-            {/* <View style={{ color: 'black', width: '100%', borderWidth: 1 }}/> */}
-
             <LinearGradient colors={['#FFFFFF', 'transparent']} start={{ x: 0, y: 0 }} end={{ x: 0, y: 0.04 }} style={{ height: 5, width: '100%' }} />
                 <View style={styles.avatarContainer}>
-                    {/* <View style={{ flexDirection: 'row', columnGap: 2, marginLeft: -5 }}>
-                        {[...Array(3)].map((_, i) => (
-                            <Text key={i} style={{ fontSize: 70 }}>•</Text>
-                        ))}
-                    </View> */}
 
                     <Text style={[{ fontSize: 60, fontWeight: 'bold', marginVertical: 10 }]}>Avatar</Text>
 
-                    {/* <View style={{ flexDirection: 'row', columnGap: 2, marginRight: -5 }}>
-                        {[...Array(3)].map((_, i) => (
-                            <Text key={i} style={{ fontSize: 70 }}>•</Text>
-                        ))}
-                    </View> */}
                 </View>
                 <ImageMoodDisplay selectedValue={selectedValue}/>
-
-                {/* <View style={{ flexDirection: 'row', columnGap: 2, width: '100%', justifyContent: 'center', marginTop: -40, marginBottom: -20  }}>
-                    {[...Array(30)].map((_, i) => (
-                        <Text key={i} style={{ fontSize: 70 }}>•</Text>
-                    ))}
-                </View> */}
-
-            
 
                 <View style={[{ flexDirection: 'col' }, styles.inputContainer]}>
                     <Text style={styles.statusText}>{dailyMessage}</Text>
@@ -213,6 +192,8 @@ const styles = StyleSheet.create({
         justifyContent: 'space-evenly',
         alignItems: 'center',
         marginTop: -10,
+
+        flexDirection: 'col',
     },
 
     inputContainer: {
