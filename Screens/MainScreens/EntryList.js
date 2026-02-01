@@ -1,21 +1,42 @@
-import { StyleSheet, Text, TouchableOpacity, View, ScrollView } from "react-native";
+import { StyleSheet, Text, View, ScrollView, FlatList} from 'react-native';
+import { useState, useEffect } from 'react';
+
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useNavigation } from "@react-navigation/core";
 import { LinearGradient } from 'expo-linear-gradient';
+import { collection, query, orderBy, onSnapshot } from 'firebase/firestore';
+import { db, auth } from '../../firebase.js';
 
-import EntryListBox from '../../Components/EntryListBox';
 
-import Octicons from '@expo/vector-icons/Octicons';
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-
-import TopBar from "../../Components/TopBar";
+import TopBar from '../../Components/TopBar';
+import EntryListBox from '../../Components/EntryListBox.js';
 
 
 
 const EntryList = () => {
 
+    const user = auth.currentUser;
+    const uid = user?.uid;
+
+    const [entries, setEntries] = useState([]);
+    const [loading, setLoading] = useState(true);
 
 
+    useEffect(() => {
+        if (!uid) return;
+
+        setLoading(true);
+
+        const entriesRef = collection(db, 'users', uid, 'entries');
+        const q = query(entriesRef, orderBy('dateKey', 'asc'));
+
+        const unsub = onSnapshot(q, (snap) => {
+            const list = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+            setEntries(list);
+            setLoading(false);
+        })
+
+        return unsub;
+    }, [uid]);
 
     return (
         <SafeAreaView style={styles.container}>
@@ -29,14 +50,12 @@ const EntryList = () => {
                 showsHorizontalScrollIndicator={false}
                 bounces={true}> 
                 
-                <Text style={[{ fontSize: 60, fontWeight: 'bold', marginTop: 0 }]}>Entry List</Text>
+                <Text style={[{ fontSize: 60, fontWeight: 'bold', marginBottom: 10 }]}>Entry List</Text>
                 
-                <View style={[{ backgroundColor: 'rgba(0,0,0,0.5)', height: 3, width: 350, borderRadius: 3, marginTop: 10, marginBottom: 10 }]}/>
-
                 <View style={styles.entries}>
-                    <EntryListBox/>
-                    <EntryListBox/>
-                    <EntryListBox/>
+                    {[...entries].reverse().map((entry) => (
+                        <EntryListBox key={entry.id} entry={entry} />
+                    ))}
                 </View>
             </ScrollView>
         </SafeAreaView>

@@ -1,7 +1,6 @@
 import { StyleSheet, Text, View, TouchableOpacity, TextInput, Pressable, KeyboardAvoidingView } from 'react-native';
 import { useState } from 'react';
 
-import Entypo from '@expo/vector-icons/Entypo';
 
 
 
@@ -64,7 +63,7 @@ function DetailedEntryView({ onClose, onSubmit, selectedValue, setSelectedValue,
                         placeholder={'Additional Notes...'} 
                         placeholderTextColor={'#999999'} 
                         multiline
-                        onChange={(text) => {setNotes(text)}}/>
+                        onChangeText={text => {setNotes(text)}}/>
                 </View>
 
                 <View style={{ flexDirection: 'row'}} >
