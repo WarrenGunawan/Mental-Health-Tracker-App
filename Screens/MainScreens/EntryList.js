@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView, FlatList} from 'react-native';
+import { StyleSheet, Text, View, ScrollView, FlatList, TouchableOpacity} from 'react-native';
 import { useState, useEffect } from 'react';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -6,6 +6,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { collection, query, orderBy, onSnapshot } from 'firebase/firestore';
 import { db, auth } from '../../firebase.js';
 
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 
 import TopBar from '../../Components/TopBar';
 import EntryListBox from '../../Components/EntryListBox.js';
@@ -18,13 +19,11 @@ const EntryList = () => {
     const uid = user?.uid;
 
     const [entries, setEntries] = useState([]);
-    const [loading, setLoading] = useState(true);
+
 
 
     useEffect(() => {
         if (!uid) return;
-
-        setLoading(true);
 
         const entriesRef = collection(db, 'users', uid, 'entries');
         const q = query(entriesRef, orderBy('dateKey', 'asc'));
@@ -32,7 +31,6 @@ const EntryList = () => {
         const unsub = onSnapshot(q, (snap) => {
             const list = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
             setEntries(list);
-            setLoading(false);
         })
 
         return unsub;
@@ -51,12 +49,21 @@ const EntryList = () => {
                 bounces={true}> 
                 
                 <Text style={[{ fontSize: 60, fontWeight: 'bold', marginBottom: 10 }]}>Entry List</Text>
+
+                
                 
                 <View style={styles.entries}>
                     {[...entries].reverse().map((entry) => (
                         <EntryListBox key={entry.id} entry={entry} />
                     ))}
                 </View>
+
+                {entries.length === 0 && (
+                    <View style={[{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }]}>
+                        <FontAwesome6 name="face-sad-tear" size={20} color="#666666" />
+                        <Text style={[{ alignItems: 'center', justifyContent: 'center', marginLeft: 10, color: '#666666', fontSize: 20 }]}>Entires to be added...</Text>
+                    </View>
+                )}
             </ScrollView>
         </SafeAreaView>
     )

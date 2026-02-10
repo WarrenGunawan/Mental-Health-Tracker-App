@@ -9,6 +9,7 @@ import SignUpPage from './Screens/Authenticate/SignUpPage';
 import AvatarPage from './Screens/MainScreens/AvatarPage';
 import ProfilePage from './Screens/MainScreens/ProfilePage';
 import EntryList from './Screens/MainScreens/EntryList';
+import MonthlyList from './Screens/MainScreens/MonthlyList';
 
 import { AuthProvider, useAuth } from './AuthContext';
 
@@ -32,6 +33,19 @@ function AuthStack() {
 function AppTabs() {
   return (
     <Tab.Navigator screenOptions={{ headerShown: false }} initialRouteName={'avatarpage'}>
+      <Tab.Screen name='monthlylist' 
+        component={MonthlyList}
+        options={{
+          tabBarShowLabel: false,
+          tabBarIcon: ({ focused }) => {
+            return(
+              <MaterialCommunityIcons
+                name={focused ? 'calendar-month' : 'calendar-month-outline'} 
+                size={30} 
+                color={'black'} />
+            )
+          },
+        }} />
       <Tab.Screen name='entrylist' 
         component={EntryList}
         options={{
