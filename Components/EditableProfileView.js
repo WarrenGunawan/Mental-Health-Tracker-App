@@ -184,6 +184,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
 
         width: 250,
+        color: '#666666',
     },
 
     submitButtonOpposite: {

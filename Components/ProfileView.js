@@ -38,9 +38,13 @@ const ProfileView = () => {
             <Text style={styles.name}>{name}</Text>
             <View style={styles.informationContainer}> 
                 <Text style={styles.aboutMeTitle}>About Me!</Text>
+                <View style={[{ backgroundColor: '#666666', height: 3, width: '80%', borderRadius: 3 }]}/>
+
                 <View>
                     <Text style={styles.aboutMe}>{bio}</Text>
                 </View>
+
+                <View style={[{ backgroundColor: '#666666', height: 3, width: '80%', borderRadius: 3 }]}/>
             </View>
         </View>
     )
@@ -94,16 +98,16 @@ const styles = StyleSheet.create({
 
     aboutMeTitle: {
         fontSize: 15,
-        padding: 20,
+        paddingBottom: 10,
 
         color: '#666666'
     },
 
     aboutMe: {
         fontSize: 20,
-        paddingHorizontal: 20,
-        paddingBottom: 20,
-    },
+        padding: 20,
+        color: '#666666'
+,    },
 })
 
 

@@ -4,6 +4,8 @@ import { useNavigation } from '@react-navigation/core';
 import { signOut } from 'firebase/auth';
 import { auth } from '../firebase';
 
+import Octicons from '@expo/vector-icons/Octicons';
+
 
 function Options({ onClose }) {
     const navigation = useNavigation();
@@ -34,6 +36,8 @@ function Options({ onClose }) {
       <Pressable style={styles.backdrop} onPress={onClose} />
 
       <View style={styles.panel}>
+        <Octicons name='gear' size={35} color='black' style={[{ paddingBottom: 10, }]}/>
+
         <TouchableOpacity onPress={handleSignOut} style={styles.button}>
           <Text style={styles.buttonText}>Sign Out</Text>
         </TouchableOpacity>
@@ -59,10 +63,11 @@ const styles = StyleSheet.create({
   panel: {
     width: '80%',
     borderRadius: 20,
-    height: '20%',
     backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
+
+    paddingVertical: 30,
   },
   button: {
     justifyContent: 'center',
