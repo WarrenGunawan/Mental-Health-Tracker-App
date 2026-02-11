@@ -1,9 +1,12 @@
-import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
+import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/core';
 
 import { doc, updateDoc, getDoc } from 'firebase/firestore';
 import { db, auth } from '../firebase.js';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as ImagePicker from 'expo-image-picker';
+import * as FileSystem from 'expo-file-system';
 
 import Wooper from '../assets/images/wooper.png';
 
@@ -41,6 +44,62 @@ const EditableProfileView = () => {
 
 
 
+    const uid = auth.currentUser.uid;
+
+    const [savedPfpUri, setSavedPfpUri] = useState(null);
+    const [draftPfpUri, setDraftPfpUri] = useState(null);
+
+    useEffect(() => {
+        const loadPfp = async () => {
+            try {
+            const raw = await AsyncStorage.getItem(PFP_KEY);
+            if (!raw) return;
+
+            const parsed = JSON.parse(raw);
+            setSavedPfpUri(parsed?.imageUri ?? null);
+            } catch (e) {
+            console.log('Failed to load pfp:', e);
+            }
+        };
+
+        if (uid) loadPfp();
+    }, [uid]);
+
+    const displayedPfpUri = draftPfpUri ?? savedPfpUri;
+
+    const pickImage = async() => {
+        const perms = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if(!perms.granted) {
+            Alert.alert("Permission to access library was not granted");
+            return;
+        }
+
+        const result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            quality: 1,
+        });
+
+        if(result.canceled) {
+            return;
+        }
+
+        let uri = result.assets?.[0]?.uri;
+        if (!uri) return;
+
+        try {
+            const fileName = uri.split('/').pop() || `pfp-${Date.now()}.jpg`;
+            const newPath = FileSystem.documentDirectory + fileName;
+            await FileSystem.copyAsync({ from: uri, to: newPath });
+            uri = newPath;
+        } catch (e) {
+            console.log('Failed to persist image, using original uri:', e);
+        }
+
+        setDraftPfpUri(uri);
+    }
+
+    const PFP_KEY = `pfp:${uid}`;
 
     const updateProfile = async () => {
         const user = auth.currentUser;
@@ -68,6 +127,7 @@ const EditableProfileView = () => {
     };
 
     const goBack = () => {
+        setDraftPfpUri(null);
         navigation.navigate('profilepage', {
             mode: 'notEdit',
         })
@@ -76,18 +136,33 @@ const EditableProfileView = () => {
 
     const confirmEdits = async () => {
         await updateProfile();
+
+        if (draftPfpUri) {
+            const payload = { imageUri: draftPfpUri };
+            await AsyncStorage.setItem(PFP_KEY, JSON.stringify(payload));
+            setSavedPfpUri(draftPfpUri);
+            setDraftPfpUri(null);
+        }
+
         goBack();
     };
 
 
     return (
         <View style={styles.profileContainer}>
-            <Image source={Wooper} style={styles.pfp}/>
-                <TextInput style={styles.username} 
-                    placeholder='New Username?'
-                    placeholderTextColor={'#666666'}
-                    autoCorrect={false}
-                    onChangeText={text => {setUsername(text)}}/>
+            
+            <TouchableOpacity onPress={pickImage}>
+                <Image
+                    source={displayedPfpUri ? { uri: displayedPfpUri } : Wooper}
+                    style={styles.pfp}/>
+            </TouchableOpacity>
+
+
+            <TextInput style={styles.username} 
+                placeholder='New Username?'
+                placeholderTextColor={'#666666'}
+                autoCorrect={false}
+                onChangeText={text => {setUsername(text)}}/>
 
 
             <Text style={styles.name}>Warren Gunawan</Text>

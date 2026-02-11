@@ -5,9 +5,31 @@ import { db, auth } from '../firebase.js';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 
 import Wooper from '../assets/images/wooper.png';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const ProfileView = () => {
+    const uid = auth.currentUser.uid;
+    const PFP_KEY = `pfp:${uid}`;
+
+    const [ pfpUri, setPfpUri ] = useState(null);
+
+    useEffect(() => {
+        const loadPfp = async () => {
+            try {
+                const raw = await AsyncStorage.getItem(PFP_KEY);
+                if (!raw) return;
+
+                const parsed = JSON.parse(raw);
+                setPfpUri(parsed?.imageUri ?? null);
+            } catch (e) {
+                console.log('Failed to load pfp:', e);
+            }
+        };
+
+        if (uid) loadPfp();
+    }, [uid]);
+
     
     
     const [ name, setName ] = useState();
@@ -33,7 +55,9 @@ const ProfileView = () => {
 
     return (
         <View style={styles.profileContainer}>
-            <Image source={Wooper} style={styles.pfp}/>
+            <Image
+                source={pfpUri ? { uri: pfpUri } : Wooper}
+                style={styles.pfp}/>
             <Text style={styles.username}>{username}</Text>
             <Text style={styles.name}>{name}</Text>
             <View style={styles.informationContainer}> 
