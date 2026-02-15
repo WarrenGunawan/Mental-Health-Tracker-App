@@ -66,7 +66,7 @@ function AppTabs() {
           tabBarIcon: ({ focused, size }) => {
             return(
               <MaterialCommunityIcons
-                name={focused ? 'bread-slice' : 'bread-slice-outline'} 
+                name={focused ? 'home' : 'home-outline'} 
                 size={30} 
                 color={'black'} />
             )
