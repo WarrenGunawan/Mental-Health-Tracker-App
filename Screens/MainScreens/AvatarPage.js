@@ -3,8 +3,9 @@ import { useState, useEffect, useMemo } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { db } from '../../firebase';
+import { db, storage } from '../../firebase';
 import { collection, getDocs, query, where, orderBy, doc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -193,30 +194,40 @@ const AvatarPage = () => {
 
     const dailyMessage = submittedToday ? 'Thank you for submitting your entry' : '* Don\'t forget to fill out your entry *';
 
-    const handleEntrySubmit = async ({ mood, notes }) => {
-        if (submittedToday) return; 
+    const handleEntrySubmit = async ({ mood, notes, image }) => {
+        if (submittedToday) return;
 
         if (!uid) {
             console.log('No user signed in — cannot save entry.');
             return;
         }
 
-        const newEntry = { dateKey: keyToday, mood, notes };
+        const entryId = keyToday; 
+        const entryRef = doc(db, 'users', uid, 'entries', entryId);
 
-        setTodayEntry(newEntry);
+        let imageUrl = null;
+        if (image) {
+            imageUrl = await uploadImage(image, uid, entryId);
+        }
 
-        await setDoc(doc(db, 'users', uid, 'entries', keyToday),
+        await setDoc(
+            entryRef,
             {
-                dateKey: keyToday,
-                shortDate: formattedDate,           
-                mood,            
-                notes,             
-                updatedAt: serverTimestamp(),
+            dateKey: keyToday,
+            shortDate: formattedDate,
+            mood,
+            notes,
+            imageUrl,              
+            updatedAt: serverTimestamp(),
+            createdAt: serverTimestamp(), 
             },
-            {merge: true}
+            { merge: true }
         );
 
+        const newEntry = { dateKey: keyToday, mood, notes, imageUrl };
         await AsyncStorage.setItem(ENTRY_STORAGE_KEY, JSON.stringify(newEntry));
+
+        setTodayEntry(newEntry);
 
         setWeekSlots(prev =>
             prev.map(s => (s.dateKey === keyToday ? { ...s, mood } : s))
@@ -224,6 +235,25 @@ const AvatarPage = () => {
 
         setSelectedValue(mood);
         setEntryQuestions(false);
+    }
+
+
+
+    const uriToBlob = async (uri) => {
+        const response = await fetch(uri);
+        const blob = await response.blob();
+        return blob;
+    }
+    
+    const uploadImage = async (uri, uid, entryId) => {
+        const blob = await uriToBlob(uri);
+
+        const storageRef = ref(storage, `users/${uid}/entries/${entryId}.jpg`);
+
+        await uploadBytes(storageRef, blob);
+        const downloadURL = await getDownloadURL(storageRef);
+
+        return downloadURL;
     }
 
 
