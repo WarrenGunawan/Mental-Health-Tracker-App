@@ -48,12 +48,11 @@ function EntryListBox({ entry }) {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        width: '100%',
         alignItems: 'center',
     },
 
     entryContainer: {
-        flex: 1,
         flexDirection: 'row',
         marginVertical: 10,
 
@@ -61,6 +60,7 @@ const styles = StyleSheet.create({
         borderRadius: 15,
 
         width: '90%',
+        height: 120,
     },
 
     date: {
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
 
         marginVertical: 5,
-        marginHorizontal: 10,
+        marginLeft: 10,
         height: '100%',
 
         borderRadius: 10,
@@ -104,6 +104,7 @@ const styles = StyleSheet.create({
         height: 100,
 
         borderRadius: 10,
+        marginLeft: 10,
     },
 });
 

@@ -37,16 +37,17 @@ const EntryList = () => {
     }, [uid]);
 
     return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView edges={['top', 'left', 'right']} style={styles.container}>
             <TopBar />
             
             <LinearGradient colors={['#FFFFFF', 'transparent']} start={{ x: 0, y: 0 }} end={{ x: 0, y: 0.04 }} style={{ height: 5, width: '100%' }} />
 
             <ScrollView style={styles.scrollContainer} 
-                contentContainerStyle={{ alignItems: 'center' }}
+                contentContainerStyle={styles.scrollContent}
                 scrollEnabled={true}
                 showsHorizontalScrollIndicator={false}
-                bounces={true}> 
+                bounces={true}
+                alwaysBounceVertical={true}> 
                 
                 <Text style={[{ fontSize: 60, fontWeight: 'bold', marginBottom: 10 }]}>Entry List</Text>
 
@@ -81,6 +82,11 @@ const styles = StyleSheet.create({
         width: '100%',
     },
 
+    scrollContent: {
+        flexGrow: 1,
+        alignItems: 'center',
+    },
+
     testButton: {
         backgroundColor: 'black',
         margin: 10,
@@ -94,8 +100,7 @@ const styles = StyleSheet.create({
 
     entries: {
         flex: 1,
-        flexDirection: 'row',
-        flexWrap: 'wrap',
+        flexDirection: 'col',
         marginTop: 20,
     },
 })
