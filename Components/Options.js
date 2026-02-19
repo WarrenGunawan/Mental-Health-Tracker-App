@@ -36,7 +36,7 @@ function Options({ onClose }) {
       <Pressable style={styles.backdrop} onPress={onClose} />
 
       <View style={styles.panel}>
-        <Octicons name='gear' size={35} color='black' style={[{ paddingBottom: 10, }]}/>
+        <Octicons name='gear' size={35} color='#666666' style={[{ paddingBottom: 10, }]}/>
 
         <TouchableOpacity onPress={handleSignOut} style={styles.button}>
           <Text style={styles.buttonText}>Sign Out</Text>
