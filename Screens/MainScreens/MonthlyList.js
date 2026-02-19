@@ -144,7 +144,7 @@ const MonthlyList = () => {
     }, [monthSlots]);
 
     return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView edges={['top', 'left', 'right']} style={styles.container}>
             <TopBar />
             <LinearGradient
                 colors={['#FFFFFF', 'transparent']}
@@ -158,10 +158,10 @@ const MonthlyList = () => {
                 contentContainerStyle={{ flexGrow: 1, alignItems: 'center' }}
                 scrollEnabled
                 showsHorizontalScrollIndicator={false}
-                bounces
-            >
+                bounces>
+
                 <Text style={{ fontSize: 60, fontWeight: 'bold', marginBottom: 10 }}>
-                Monthly List
+                Calendar
                 </Text>
 
                 <View style={{ flex: 1, width: '100%', justifyContent: 'center', alignItems: 'center' }}>
@@ -214,12 +214,12 @@ const MonthlyList = () => {
 
                         {monthMoodMap.size === 0 ? (
                             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 20 }}>
-                                <FontAwesome6 name="face-sad-tear" size={20} color="#666666" />
+                                <FontAwesome6 name="face-sad-tear" size={24} color="#666666" />
                                 <Text style={{ marginLeft: 10, color: '#666666', fontSize: 20 }}>Entries to be added...</Text>
                             </View>
                         ) : (
                             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 20 }}>
-                                <FontAwesome6 name="face-smile-beam" size={24} color="black" />
+                                <FontAwesome6 name="face-smile-beam" size={24} color="#666666" />
                                 <Text style={{ marginLeft: 10, color: '#666666', fontSize: 20 }}>Thank you for your Entries!</Text>
                             </View>
                         )}
@@ -239,6 +239,7 @@ container: {
 
 scrollContainer: {
     flex: 1,
+    marginBottom: 20,
 },
 
 monthHeader: {

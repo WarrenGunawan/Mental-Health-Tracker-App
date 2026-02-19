@@ -260,7 +260,7 @@ const AvatarPage = () => {
 
 
     return (
-        <SafeAreaView style={styles.container} > 
+        <SafeAreaView edges={['top', 'left', 'right']} style={styles.container} > 
             <TopBar />
             <LinearGradient colors={['#FFFFFF', 'transparent']} start={{ x: 0, y: 0 }} end={{ x: 0, y: 0.04 }} style={{ height: 5, width: '100%' }} />
                 <View style={styles.avatarContainer}>
@@ -356,6 +356,8 @@ const styles = StyleSheet.create({
 
         alignItems: 'center',
         justifyContent: 'flex-end',
+
+        marginBottom: 20,
     },
 
     dailyEntryButton: {
