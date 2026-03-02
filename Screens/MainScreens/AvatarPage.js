@@ -3,9 +3,8 @@ import { useState, useEffect, useMemo } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { db, storage } from '../../firebase';
+import { db } from '../../firebase';
 import { collection, getDocs, query, where, orderBy, doc, setDoc, serverTimestamp } from 'firebase/firestore';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -15,6 +14,7 @@ import SubmittedDetailedEntryView from '../../Components/SubmittedDetailedEntryV
 import TopBar from '../../Components/TopBar';
 
 import { useAuth } from '../../AuthContext';
+
 
 
 const AvatarPage = () => {
@@ -194,7 +194,7 @@ const AvatarPage = () => {
 
     const dailyMessage = submittedToday ? 'Thank you for submitting your entry' : '* Don\'t forget to fill out your entry *';
 
-    const handleEntrySubmit = async ({ mood, notes, image }) => {
+    const handleEntrySubmit = async ({ mood, notes }) => {
         if (submittedToday) return;
 
         if (!uid) {
@@ -205,26 +205,20 @@ const AvatarPage = () => {
         const entryId = keyToday; 
         const entryRef = doc(db, 'users', uid, 'entries', entryId);
 
-        let imageUrl = null;
-        if (image) {
-            imageUrl = await uploadImage(image, uid, entryId);
-        }
-
         await setDoc(
             entryRef,
             {
             dateKey: keyToday,
             shortDate: formattedDate,
             mood,
-            notes,
-            imageUrl,              
+            notes,            
             updatedAt: serverTimestamp(),
             createdAt: serverTimestamp(), 
             },
             { merge: true }
         );
 
-        const newEntry = { dateKey: keyToday, mood, notes, imageUrl };
+        const newEntry = { dateKey: keyToday, mood, notes };
         await AsyncStorage.setItem(ENTRY_STORAGE_KEY, JSON.stringify(newEntry));
 
         setTodayEntry(newEntry);
@@ -238,23 +232,7 @@ const AvatarPage = () => {
     }
 
 
-
-    const uriToBlob = async (uri) => {
-        const response = await fetch(uri);
-        const blob = await response.blob();
-        return blob;
-    }
     
-    const uploadImage = async (uri, uid, entryId) => {
-        const blob = await uriToBlob(uri);
-
-        const storageRef = ref(storage, `users/${uid}/entries/${entryId}.jpg`);
-
-        await uploadBytes(storageRef, blob);
-        const downloadURL = await getDownloadURL(storageRef);
-
-        return downloadURL;
-    }
 
 
 

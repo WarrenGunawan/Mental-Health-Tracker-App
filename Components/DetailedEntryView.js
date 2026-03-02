@@ -9,38 +9,14 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
 function DetailedEntryView({ onClose, onSubmit, selectedValue, setSelectedValue, formattedDate, moodOptions }) {
     const [ notes, setNotes ] = useState('');
-    const [ image, setImage ] = useState(null);
 
     const handleSubmit = () => {
         if(selectedValue == null) {
             alert('Pick a mood first!');
             return;
         } 
-        onSubmit({ mood: selectedValue, notes, image});
+        onSubmit({ mood: selectedValue, notes});
         onClose();
-    }
-
-    const pickImage =  async () => {
-        const perms = await ImagePicker.requestMediaLibraryPermissionsAsync();
-        if (!perms.granted) {
-            Alert.alert('Permission to access library was not granted');
-            return;
-        }
-
-        const result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            allowsEditing: true,
-            quality: 0.8,
-        });
-
-        if (result.canceled) return;
-
-        const uri = result.assets?.[0]?.uri;
-        if (uri) {
-            setImage(uri)
-        };
-
-        setImage(result.assets[0].uri);
     }
     
 
@@ -91,14 +67,6 @@ function DetailedEntryView({ onClose, onSubmit, selectedValue, setSelectedValue,
                         placeholderTextColor={'#999999'} 
                         multiline
                         onChangeText={text => {setNotes(text)}}/>
-
-                    <TouchableOpacity onPress={pickImage} activeOpacity={0.8}>
-                        <MaterialCommunityIcons
-                            style={styles.addImageButton}
-                            name="file-image-outline"
-                            size={50}
-                            color="#666666" />
-                    </TouchableOpacity>
                 </View>
 
                 <View style={{ flexDirection: 'row'}} >

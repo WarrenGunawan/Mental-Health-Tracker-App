@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView, FlatList, TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import { useState, useEffect } from 'react';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -36,6 +36,9 @@ const EntryList = () => {
         return unsub;
     }, [uid]);
 
+
+
+
     return (
         <SafeAreaView edges={['top', 'left', 'right']} style={styles.container}>
             <TopBar />
@@ -52,17 +55,18 @@ const EntryList = () => {
                 <Text style={[{ fontSize: 60, fontWeight: 'bold', marginBottom: 10 }]}>Entry List</Text>
 
                 
-                
-                <View style={styles.entries}>
+
+
+                {entries.length === 0 ? (
+                    <View style={[{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }]}>
+                        <FontAwesome6 name="face-sad-tear" size={20} color="#666666" />
+                        <Text style={[{ alignItems: 'center', justifyContent: 'center', marginLeft: 10, color: '#666666', fontSize: 20 }]}>Entires to be added...</Text>
+                    </View>
+                ) : (
+                    <View style={styles.entries}>
                     {[...entries].reverse().map((entry) => (
                         <EntryListBox key={entry.id} entry={entry} />
                     ))}
-                </View>
-
-                {entries.length === 0 && (
-                    <View style={[{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }]}>
-                        <FontAwesome6 name="face-sad-tear" size={20} color="#666666" />
-                        <Text style={[{ alignItems: 'center', justifyContent: 'center', marginLeft: 10, color: '#666666', fontSize: 20 }]}>Entires to be added...</Text>
                     </View>
                 )}
             </ScrollView>

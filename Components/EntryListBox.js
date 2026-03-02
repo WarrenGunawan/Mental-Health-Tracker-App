@@ -1,9 +1,9 @@
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 
 
 
 function EntryListBox({ entry }) {
-    const { dateKey, shortDate, mood, notes, imageUrl, updatedAt } = entry;
+    const { dateKey, shortDate, mood, notes, updatedAt } = entry;
 
     let color = '';
     if(mood == 1) {
@@ -33,11 +33,7 @@ function EntryListBox({ entry }) {
                         <View style={[styles.circle, { backgroundColor: color }]}/>
 
                         <View style={styles.textContainer}>
-                            <Text style={{ margin: 10 }} numberOfLines={4} ellipsizeMode="tail">{notes}</Text>
-                        </View>
-
-                        <View>
-                            {imageUrl? <Image source={{ uri: imageUrl }} style={styles.entryImage} /> : null}
+                            <Text style={{ margin: 10 }} ellipsizeMode="tail">{notes}</Text>
                         </View>
                     </View>
                 </View>
@@ -60,7 +56,6 @@ const styles = StyleSheet.create({
         borderRadius: 15,
 
         width: '90%',
-        height: 120,
     },
 
     date: {
@@ -83,9 +78,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
 
-        marginVertical: 5,
         marginLeft: 10,
-        height: '100%',
 
         borderRadius: 10,
 
@@ -97,14 +90,6 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         borderWidth: 3,
         borderColor: 'rgba(0,0,0,0.2)',
-    },
-
-    entryImage: {
-        width: 100,
-        height: 100,
-
-        borderRadius: 10,
-        marginLeft: 10,
     },
 });
 
