@@ -6,10 +6,14 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import LoginPage from './Screens/Authenticate/LoginPage';
 import SignUpPage from './Screens/Authenticate/SignUpPage';
+import MonthlyList from './Screens/MainScreens/MonthlyList';
+import EntryList from './Screens/MainScreens/EntryList';
+import FriendsPage from './Screens/MainScreens/FriendsPage'
 import AvatarPage from './Screens/MainScreens/AvatarPage';
 import ProfilePage from './Screens/MainScreens/ProfilePage';
-import EntryList from './Screens/MainScreens/EntryList';
-import MonthlyList from './Screens/MainScreens/MonthlyList';
+
+
+
 
 import { AuthProvider, useAuth } from './AuthContext';
 
@@ -73,6 +77,20 @@ function AppTabs() {
           },
         }}
          />
+      <Tab.Screen name='friendspage' 
+        component={FriendsPage} 
+        options={{
+          tabBarShowLabel: false,
+          tabBarIcon: ({ focused, size }) => {
+            return(
+              <MaterialCommunityIcons
+                name={focused ? 'account-group' : 'account-group-outline'} 
+                size={30} 
+                color={'black'} />
+            )
+          },
+        }}
+      />
       <Tab.Screen name='profilepage' 
         component={ProfilePage} 
         options={{
