@@ -160,7 +160,7 @@ const EditableProfileView = () => {
 
             <TextInput style={styles.username} 
                 placeholder='New Username?'
-                placeholderTextColor={'#666666'}
+                placeholderTextColor={'rgba(74, 96, 128, 0.4)'}
                 autoCorrect={false}
                 onChangeText={text => {setUsername(text)}}/>
 
@@ -169,18 +169,18 @@ const EditableProfileView = () => {
             <View style={styles.informationContainer}> 
                 <Text style={styles.aboutMeTitle}>About Me!</Text>
 
-                <View style={[{ backgroundColor: '#666666', height: 3, width: '80%', borderRadius: 3 }]}/>
+                <View style={[{ backgroundColor: '#4A6080', height: 3, width: '80%', borderRadius: 3 }]}/>
             
                 <View>
                     <TextInput style={styles.aboutMe} 
                         placeholder='Edit Here'
-                        placeholderTextColor='rgba(0,0,0,0.4)' 
+                        placeholderTextColor='rgba(74, 96, 128, 0.4)' 
                         onChangeText={text => {setBio(text)}}
                         autoCorrect={false}
                         multiline/>
                 </View>
 
-                <View style={[{ backgroundColor: '#666666', height: 3, width: '80%', borderRadius: 3}]}/>
+                <View style={[{ backgroundColor: '#4A6080', height: 3, width: '80%', borderRadius: 3}]}/>
 
                 <View style={{ flexDirection: 'row'}} >
                     <TouchableOpacity onPress={confirmEdits}>
@@ -206,7 +206,7 @@ const styles = StyleSheet.create({
         width: '90%',
         borderRadius: 30,
 
-        backgroundColor: '#DDDDDD',
+        backgroundColor: '#E0E9F1',
     },
 
     pfp: {
@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
         height: 150,
 
         borderRadius: 200,
-        backgroundColor: '#BBBBBB',
+        backgroundColor: '#D0DAE8',
         marginTop: 20,
     },
 
@@ -228,7 +228,7 @@ const styles = StyleSheet.create({
 
     name: {
         fontSize: 15,
-        color: '#666666',
+        color: '#4A6080',
     },
 
     informationContainer: {
@@ -236,10 +236,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
 
-        backgroundColor: '#BBBBBB',
+        backgroundColor: '#E0E9F1',
         borderRadius: 20,
 
-        width: '80%',
+        width: '100%',
 
         marginTop: 10,
         marginBottom: 30,
@@ -249,7 +249,7 @@ const styles = StyleSheet.create({
         fontSize: 15,
         marginBottom: 10,
 
-        color: '#666666'
+        color: '#4A6080'
     },
 
     aboutMe: {
@@ -259,16 +259,16 @@ const styles = StyleSheet.create({
         fontSize: 20,
 
         width: 250,
-        color: '#666666',
+        color: '#4A6080',
     },
 
     submitButtonOpposite: {
         borderWidth: 5,
-        borderColor: '#DDDDDD',
+        borderColor: '#D0DAE8',
         borderRadius: 20,
         backgroundColor: 'white',
 
-        color: '#666666',
+        color: '#4A6080',
 
         justifyContent: 'center',
         alignItems: 'center',
@@ -278,9 +278,9 @@ const styles = StyleSheet.create({
 
     submitButton: {
         borderRadius: 20,
-        backgroundColor: '#DDDDDD',
+        backgroundColor: '#D0DAE8',
 
-        color: '#666666',
+        color: '#4A6080',
 
         marginTop: 10,
         paddingVertical: 15,

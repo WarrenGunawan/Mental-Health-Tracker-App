@@ -15,13 +15,13 @@ function TopBar() {
     return (
         <>
             <View style={{ position: 'absolute', top: 50, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', zIndex: 1 }}>
-                <Text style={{ fontSize: 20 }}>InnerHue </Text>
-                <MaterialCommunityIcons name='bread-slice-outline' size={20} color='black' />
+                <Text style={{ fontSize: 20, color: '#4A6080' }}>InnerHue </Text>
+                <MaterialCommunityIcons name='bread-slice-outline' size={20} color='#4A6080' />
             </View>
             <View style={styles.topContainer}>
                 <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => setSelectedOptions(true)}>
-                    <Text style={{ fontSize: 15, marginBottom: 1 }}>Options </Text>
-                    <Octicons name='gear' size={18} color='black'/>
+                    <Text style={{ fontSize: 15, marginBottom: 1, color: '#4A6080' }}>Options </Text>
+                    <Octicons name='gear' size={18} color='#4A6080'/>
                 </TouchableOpacity>
 
             </View>
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
         padding: 10,
         alignItems: 'center',
 
-        backgroundColor: 'white',
+        backgroundColor: '#F4F7FA',
     },
 });
 

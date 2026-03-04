@@ -52,15 +52,15 @@ const EntryList = () => {
                 bounces={true}
                 alwaysBounceVertical={true}> 
                 
-                <Text style={[{ fontSize: 60, fontWeight: 'bold', marginBottom: 10 }]}>Entry List</Text>
+                <Text style={[{ fontSize: 60, fontWeight: 'bold', marginBottom: 10, color: '#4A6080' }]}>Entry List</Text>
 
                 
 
 
                 {entries.length === 0 ? (
                     <View style={[{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }]}>
-                        <FontAwesome6 name="face-sad-tear" size={20} color="#666666" />
-                        <Text style={[{ alignItems: 'center', justifyContent: 'center', marginLeft: 10, color: '#666666', fontSize: 20 }]}>Entires to be added...</Text>
+                        <FontAwesome6 name="face-sad-tear" size={20} color="#4A6080" />
+                        <Text style={[{ alignItems: 'center', justifyContent: 'center', marginLeft: 10, color: '#4A6080', fontSize: 20 }]}>Entires to be added...</Text>
                     </View>
                 ) : (
                     <View style={styles.entries}>
@@ -89,17 +89,6 @@ const styles = StyleSheet.create({
     scrollContent: {
         flexGrow: 1,
         alignItems: 'center',
-    },
-
-    testButton: {
-        backgroundColor: 'black',
-        margin: 10,
-        padding: 5,
-    },
-
-    testText: {
-        color: 'white',
-        fontSize: 30,
     },
 
     entries: {

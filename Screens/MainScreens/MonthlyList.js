@@ -160,7 +160,7 @@ const MonthlyList = () => {
                 showsHorizontalScrollIndicator={false}
                 bounces>
 
-                <Text style={{ fontSize: 60, fontWeight: 'bold', marginBottom: 10 }}>
+                <Text style={{ fontSize: 60, fontWeight: 'bold', marginBottom: 10, color: '#4A6080' }}>
                 Calendar
                 </Text>
 
@@ -170,7 +170,7 @@ const MonthlyList = () => {
 
                         {canGoPrev ? (
                             <TouchableOpacity onPress={goPrevMonth} style={styles.navBtn}>
-                            <FontAwesome6 name="chevron-left" size={18} color="#666666" />
+                            <FontAwesome6 name="chevron-left" size={18} color="#4A6080" />
                             </TouchableOpacity>
                         ) : (
                             <View style={styles.navBtn} />
@@ -179,7 +179,7 @@ const MonthlyList = () => {
                         <Text style={styles.monthTitle}>{monthTitle}</Text>
 
                         <TouchableOpacity onPress={goNextMonth} style={styles.navBtn}>
-                            <FontAwesome6 name="chevron-right" size={18} color="#666666" />
+                            <FontAwesome6 name="chevron-right" size={18} color="#4A6080" />
                         </TouchableOpacity>
                         </View>
 
@@ -197,7 +197,7 @@ const MonthlyList = () => {
                                 return <View key={slot.key} style={[styles.weekSlot, styles.blankSlot]} />;
                                 }
 
-                                const bg = slot.mood ? colorForMood(slot.mood) : 'white';
+                                const bg = slot.mood ? colorForMood(slot.mood) : '#D0DAE8';
                                 return (
                                 <View
                                     key={slot.key}
@@ -214,13 +214,13 @@ const MonthlyList = () => {
 
                         {monthMoodMap.size === 0 ? (
                             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 20 }}>
-                                <FontAwesome6 name="face-sad-tear" size={24} color="#666666" />
-                                <Text style={{ marginLeft: 10, color: '#666666', fontSize: 20 }}>Entries to be added...</Text>
+                                <FontAwesome6 name="face-sad-tear" size={24} color="#4A6080" />
+                                <Text style={{ marginLeft: 10, color: '#4A6080', fontSize: 20 }}>Entries to be added...</Text>
                             </View>
                         ) : (
                             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 20 }}>
-                                <FontAwesome6 name="face-smile-beam" size={24} color="#666666" />
-                                <Text style={{ marginLeft: 10, color: '#666666', fontSize: 20 }}>Thank you for your Entries!</Text>
+                                <FontAwesome6 name="face-smile-beam" size={24} color="#4A6080" />
+                                <Text style={{ marginLeft: 10, color: '#4A6080', fontSize: 20 }}>Thank you for your Entries!</Text>
                             </View>
                         )}
                     </View>
@@ -252,7 +252,7 @@ monthHeader: {
 monthTitle: {
     fontSize: 22,
     fontWeight: 'bold',
-    color: '#666666',
+    color: '#4A6080',
 },
 
 navBtn: {
@@ -274,7 +274,7 @@ weekSlot: {
     height: 38,
     borderRadius: 10,
     borderWidth: 3,
-    borderColor: 'rgba(0,0,0,0.2)',
+    borderColor: 'rgba(74, 96, 128, 0.2)',
 },
 
 blankSlot: {
@@ -295,11 +295,13 @@ weekLabel: {
     textAlign: 'center',
     fontSize: 12,
     opacity: 0.6,
+
+    color: '#4A6080',
 },
 
 calendarContainer: {
     flex: 1,
-    backgroundColor: '#DDDDDD',
+    backgroundColor: '#E0E9F1',
     width: '97%',
     justifyContent: 'center',
     alignItems: 'center',

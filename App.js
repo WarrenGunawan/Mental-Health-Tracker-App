@@ -36,7 +36,7 @@ function AuthStack() {
 
 function AppTabs() {
   return (
-    <Tab.Navigator screenOptions={{ headerShown: false }} initialRouteName={'avatarpage'}>
+    <Tab.Navigator screenOptions={{ headerShown: false, tabBarStyle: { backgroundColor: '#F4F7FA'} }} initialRouteName={'avatarpage'}>
       <Tab.Screen name='monthlylist' 
         component={MonthlyList}
         options={{
@@ -46,7 +46,7 @@ function AppTabs() {
               <MaterialCommunityIcons
                 name={focused ? 'calendar-month' : 'calendar-month-outline'} 
                 size={30} 
-                color={'black'} />
+                color={'#4A6080'} />
             )
           },
         }} />
@@ -59,7 +59,7 @@ function AppTabs() {
               <MaterialCommunityIcons
                 name={focused ? 'list-box' : 'list-box-outline'} 
                 size={30} 
-                color={'black'} />
+                color={'#4A6080'} />
             )
           },
         }} />
@@ -72,7 +72,7 @@ function AppTabs() {
               <MaterialCommunityIcons
                 name={focused ? 'home' : 'home-outline'} 
                 size={30} 
-                color={'black'} />
+                color={'#4A6080'} />
             )
           },
         }}
@@ -86,7 +86,7 @@ function AppTabs() {
               <MaterialCommunityIcons
                 name={focused ? 'account-group' : 'account-group-outline'} 
                 size={30} 
-                color={'black'} />
+                color={'#4A6080'} />
             )
           },
         }}
@@ -100,7 +100,7 @@ function AppTabs() {
               <MaterialCommunityIcons
                 name={focused ? 'emoticon-cool' : 'emoticon-cool-outline'} 
                 size={30} 
-                color={'black'} />
+                color={'#4A6080'} />
             )
           },
         }}
@@ -122,11 +122,11 @@ const AppTheme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    background: 'white', 
+    background: '#F4F7FA', 
   },
 };
 
-xj
+
 export default function App() {
 
   return (

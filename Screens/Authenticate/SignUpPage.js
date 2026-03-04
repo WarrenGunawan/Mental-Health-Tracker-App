@@ -43,38 +43,38 @@ const SignUpPage = () => {
 
         <KeyboardAvoidingView style={styles.container} behavior='padding'> 
             <View style={[{ flexDirection: 'row', marginBottom: 20, }]}>
-                    <Text style={[{ fontSize: 60 }]}>InnerHue </Text>
-                    <MaterialCommunityIcons name="bread-slice-outline" size={70} color="black" />
+                    <Text style={[{ fontSize: 60, color: '#4A6080' }]}>InnerHue </Text>
+                    <MaterialCommunityIcons name="bread-slice-outline" size={70} color="#4A6080" />
                 </View>
             
-                <View style={[{ backgroundColor: 'rgba(0,0,0,0.5)', height: 3, width: 350, borderRadius: 3, marginBottom: 50}]}/>
+                <View style={[{ backgroundColor: '#4A6080', height: 3, width: 350, borderRadius: 3, marginBottom: 50}]}/>
             
                 <View style={[{ alignSelf: 'flex-start', marginLeft: 80, marginBottom: 5 }]}>
-                    <Text>Enjoy Your Stay!</Text>
+                    <Text style={{ color: '#4A6080'}}>Enjoy Your Stay!</Text>
                 </View>
             
                 <TextInput style={styles.textInputStyle} 
                     placeholder='Name' 
-                    placeholderTextColor='rgba(0,0,0,0.5)' 
+                    placeholderTextColor='rgba(74, 96, 128, 0.4)' 
                     onChangeText={text => {setName(text)}} 
                     autoCorrect={false}
                     autoCapitalize='true'/>
                 <TextInput style={styles.textInputStyle} 
                     placeholder='Username' 
-                    placeholderTextColor='rgba(0,0,0,0.5)' 
+                    placeholderTextColor='rgba(74, 96, 128, 0.4)' 
                     onChangeText={text => {setUsername(text)}} 
                     autoCorrect={false}
                     autoCapitalize='false'/>
                 <TextInput style={styles.textInputStyle} 
                     placeholder='Email' 
-                    placeholderTextColor='rgba(0,0,0,0.5)' 
+                    placeholderTextColor='rgba(74, 96, 128, 0.4)' 
                     autoCorrect={false} 
                     onChangeText={text => {setEmail(text)}} 
                     autoCapitalize='false'/>
 
                 <TextInput style={styles.textInputStyle} 
                     placeholder='Password' 
-                    placeholderTextColor='rgba(0,0,0,0.5)' 
+                    placeholderTextColor='rgba(74, 96, 128, 0.4)' 
                     autoCorrect={false} 
                     onChangeText={text => {setPassword(text)}} 
                     autoCapitalize='false'
@@ -90,7 +90,7 @@ const SignUpPage = () => {
 
                 <View style={[{ flexDirection: 'row', margin: 10 }]}>
                     <TouchableOpacity onPress={() => navigation.replace('login')}>
-                        <Text style={[{ color: "#rgba(0,0,0,0.5)", textDecorationLine: 'underline' }]}>Login Here!</Text>
+                        <Text style={[{ color: '#4A6080', textDecorationLine: 'underline' }]}>Login Here!</Text>
                     </TouchableOpacity>
                 </View>
             
@@ -132,18 +132,18 @@ const styles = StyleSheet.create({
 
         padding: 10,
 
-        backgroundColor: 'rgba(0,0,0,0.2)',
+        backgroundColor: '#D0DAE8',
         borderRadius: 15,
         margin: 5,
+
+        color: '#4A6080'
     },
 
     loginButton: {
-        borderWidth: 2,
-        borderColor: 'rgba(0,0,0,0.35)',
         borderRadius: 20,
-        backgroundColor: 'rgba(0,0,0,0.2)',
+        backgroundColor: '#D0DAE8',
 
-        color: 'rgba(0,0,0,0.6)',
+        color: '#4A6080',
 
         justifyContent: 'center',
         alignItems: 'center',

@@ -62,13 +62,13 @@ const ProfileView = () => {
             <Text style={styles.name}>{name}</Text>
             <View style={styles.informationContainer}> 
                 <Text style={styles.aboutMeTitle}>About Me!</Text>
-                <View style={[{ backgroundColor: '#666666', height: 3, width: '80%', borderRadius: 3 }]}/>
+                <View style={[{ backgroundColor: '#4A6080', height: 3, width: '80%', borderRadius: 3 }]}/>
 
                 <View>
                     <Text style={styles.aboutMe}>{bio}</Text>
                 </View>
 
-                <View style={[{ backgroundColor: '#666666', height: 3, width: '80%', borderRadius: 3 }]}/>
+                <View style={[{ backgroundColor: '#4A6080', height: 3, width: '80%', borderRadius: 3 }]}/>
             </View>
         </View>
     )
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
         width: '90%',
         borderRadius: 30,
 
-        backgroundColor: '#DDDDDD',
+        backgroundColor: '#E0E9F1',
     },
 
     pfp: {
@@ -92,18 +92,19 @@ const styles = StyleSheet.create({
         height: 150,
 
         borderRadius: 200,
-        backgroundColor: '#BBBBBB',
+        backgroundColor: '#D0DAE8',
         marginTop: 20,
     },
 
     username: {
         fontSize: 30,
         marginTop: 10,
+        color: '#4A6080'
     },
 
     name: {
         fontSize: 15,
-        color: '#666666'
+        color: '#4A6080',
     },
 
     informationContainer: {
@@ -111,10 +112,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
 
-        backgroundColor: '#BBBBBB',
+        backgroundColor: '#E0E9F1',
         borderRadius: 20,
 
-        width: '80%',
+        width: '100%',
         
         marginTop: 10,
         marginBottom: 30,
@@ -124,13 +125,13 @@ const styles = StyleSheet.create({
         fontSize: 15,
         paddingBottom: 10,
 
-        color: '#666666'
+        color: '#4A6080'
     },
 
     aboutMe: {
         fontSize: 20,
         padding: 20,
-        color: '#666666'
+        color: '#4A6080'
 ,    },
 })
 

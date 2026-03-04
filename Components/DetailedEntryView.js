@@ -29,11 +29,11 @@ function DetailedEntryView({ onClose, onSubmit, selectedValue, setSelectedValue,
          
 
             <View style={[{ backgroundColor: 'white', padding: 30, borderRadius: 30, justifyContent: 'center', alignItems: 'center'  }]}>     
-                <Text style={{fontSize: 45, marginBottom: 20  }}>{formattedDate} Entry</Text>
+                <Text style={{fontSize: 45, marginBottom: 20, color: '#4A6080'  }}>{formattedDate} Entry</Text>
 
-                <View style={[{ backgroundColor: 'rgba(0,0,0,0.5)', height: 3, width: 280, borderRadius: 3, marginBottom: 20}]}/>
+                <View style={[{ height: 3, width: 280, borderRadius: 3, marginBottom: 20, backgroundColor: '#4A6080'}]}/>
 
-                <Text style={[{ alignSelf: 'flex-start', marginBottom: 20, fontSize: 16 }]}>How are you Feeling?</Text>
+                <Text style={[{ alignSelf: 'flex-start', marginBottom: 20, fontSize: 16, color: '#4A6080' }]}>How are you Feeling?</Text>
                 <View style={styles.wrapper}>
                     <View style={styles.grid}>
                         {moodOptions.map((option) => {
@@ -64,7 +64,7 @@ function DetailedEntryView({ onClose, onSubmit, selectedValue, setSelectedValue,
                 <View style={styles.detailedDailyEntry}>
                     <TextInput style={styles.textInputDailyEntry} 
                         placeholder={'Additional Notes...'} 
-                        placeholderTextColor={'#999999'} 
+                        placeholderTextColor={'rgba(74, 96, 128, 0.4)'} 
                         multiline
                         onChangeText={text => {setNotes(text)}}/>
                 </View>
@@ -90,9 +90,9 @@ const GAP = 16;
 const styles = StyleSheet.create({
     submitButton: {
         borderRadius: 20,
-        backgroundColor: '#DDDDDD',
+        backgroundColor: '#D0DAE8',
 
-        color: '#666666',
+        color: '#4A6080',
 
         justifyContent: 'center',
         alignItems: 'center',
@@ -100,11 +100,11 @@ const styles = StyleSheet.create({
 
     submitButtonOpposite: {
         borderWidth: 5,
-        borderColor: '#DDDDDD',
+        borderColor: '#D0DAE8',
         borderRadius: 20,
         backgroundColor: 'white',
 
-        color: '#666666',
+        color: '#4A6080',
 
         justifyContent: 'center',
         alignItems: 'center',
@@ -134,8 +134,10 @@ const styles = StyleSheet.create({
         padding: 10,
         marginVertical: 30,
 
-        backgroundColor: '#DDDDDD',
+        backgroundColor: '#D0DAE8',
         borderRadius: 15,
+
+        color: '#4A6080'
     },
 
     backdrop: {
@@ -162,7 +164,7 @@ const styles = StyleSheet.create({
     },
 
     addImageButton: {
-        backgroundColor: '#DDDDDD',
+        backgroundColor: '#D0DAE8',
 
         borderRadius: 15,
         paddingVertical: 5,

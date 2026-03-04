@@ -28,32 +28,32 @@ const LoginPage = () => {
     return (
         <KeyboardAvoidingView style={styles.container} behavior='padding'> 
             <View style={[{ flexDirection: 'row', marginBottom: 20, }]}>
-                <Text style={[{ fontSize: 60 }]}>InnerHue </Text>
-                <MaterialCommunityIcons name="bread-slice-outline" size={70} color="black" />
+                <Text style={[{ fontSize: 60, color: '#4A6080' }]}>InnerHue </Text>
+                <MaterialCommunityIcons name="bread-slice-outline" size={70} color="#4A6080" />
             </View>
 
-            <View style={[{ backgroundColor: 'rgba(0,0,0,0.5)', height: 3, width: 350, borderRadius: 3, marginBottom: 50}]}/>
+            <View style={[{ backgroundColor: '#4A6080', height: 3, width: 350, borderRadius: 3, marginBottom: 50}]}/>
 
             <View style={[{ alignSelf: 'flex-start', marginLeft: 80, marginBottom: 5 }]}>
-                <Text>Welcome Friend!</Text>
+                <Text style={{ color: '#4A6080' }}>Welcome Friend!</Text>
             </View>
 
             <TextInput style={styles.textInputStyle} 
                 placeholder='Email' 
-                placeholderTextColor='rgba(0,0,0,0.5)' 
+                placeholderTextColor='rgba(74, 96, 128, 0.4)' 
                 autoCorrect={false}
                 onChangeText={text => setEmail(text)}
                 autoCapitalize='false'/>
             <TextInput style={styles.textInputStyle} 
                 placeholder='Password' 
-                placeholderTextColor='rgba(0,0,0,0.5)' 
+                placeholderTextColor='rgba(74, 96, 128, 0.4)' 
                 autoCorrect={false}
                 onChangeText={text => setPassword(text)}
                 autoCapitalize='false'
                 secureTextEntry/>
 
 
-            <View style={[{ backgroundColor: 'rgba(0,0,0,0.5)', height: 3, width: 350, borderRadius: 3, marginTop: 50 }]}/>
+            <View style={[{ backgroundColor: '#4A6080', height: 3, width: 350, borderRadius: 3, marginTop: 50 }]}/>
 
 
             <TouchableOpacity onPress={handleSignIn}>
@@ -62,9 +62,9 @@ const LoginPage = () => {
 
 
             <View style={[{ flexDirection: 'row', margin: 10 }]}>
-                <Text>Don't have an account? </Text>
+                <Text style={{ color: '#4A6080' }}>Don't have an account? </Text>
                 <TouchableOpacity onPress={() => navigation.replace('signup')}>
-                    <Text style={[{ color: "#rgba(0,0,0,0.5)", textDecorationLine: 'underline' }]}>Register now!</Text>
+                    <Text style={[{ color: '#4A6080', textDecorationLine: 'underline' }]}>Register now!</Text>
                 </TouchableOpacity>
             </View>
         </KeyboardAvoidingView>
@@ -77,17 +77,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'column',
-    },
-
-    testButton: {
-        backgroundColor: 'black',
-        margin: 10,
-        padding: 5,
-    },
-
-    testText: {
-        color: 'white',
-        fontSize: 30,
     },
 
     input: {
@@ -105,18 +94,18 @@ const styles = StyleSheet.create({
 
         padding: 10,
 
-        backgroundColor: 'rgba(0,0,0,0.2)',
+        backgroundColor: '#D0DAE8',
         borderRadius: 15,
         margin: 5,
+
+        color: '#4A6080',
     },
 
     loginButton: {
-        borderWidth: 2,
-        borderColor: 'rgba(0,0,0,0.35)',
         borderRadius: 20,
-        backgroundColor: 'rgba(0,0,0,0.2)',
+        backgroundColor: '#D0DAE8',
 
-        color: 'rgba(0,0,0,0.6)',
+        color: '#4A6080',
 
         justifyContent: 'center',
         alignItems: 'center',

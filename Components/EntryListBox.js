@@ -33,7 +33,7 @@ function EntryListBox({ entry }) {
                         <View style={[styles.circle, { backgroundColor: color }]}/>
 
                         <View style={styles.textContainer}>
-                            <Text style={{ margin: 10 }} ellipsizeMode="tail">{notes}</Text>
+                            <Text style={{ margin: 10, color: '#4A6080' }} ellipsizeMode="tail">{notes}</Text>
                         </View>
                     </View>
                 </View>
@@ -52,14 +52,14 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginVertical: 10,
 
-        backgroundColor: '#DDDDDD',
+        backgroundColor: '#D0DAE8',
         borderRadius: 15,
 
         width: '90%',
     },
 
     date: {
-        color: '#666666',
+        color: '#4A6080',
         marginLeft: 20,
     },
 
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     },
 
     textContainer: {
-        backgroundColor: 'white',
+        backgroundColor: '#E0E9F1',
 
         flex: 1,
         alignItems: 'center',

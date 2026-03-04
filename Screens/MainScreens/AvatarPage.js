@@ -243,13 +243,13 @@ const AvatarPage = () => {
             <LinearGradient colors={['#FFFFFF', 'transparent']} start={{ x: 0, y: 0 }} end={{ x: 0, y: 0.04 }} style={{ height: 5, width: '100%' }} />
                 <View style={styles.avatarContainer}>
 
-                    <Text style={[{ fontSize: 60, fontWeight: 'bold', marginVertical: 10 }]}>Avatar</Text>
+                    <Text style={[{ fontSize: 60, fontWeight: 'bold', marginVertical: 10, color: '#4A6080' }]}>Avatar</Text>
 
                 </View>
                 <ImageMoodDisplay selectedValue={selectedValue}/>
 
                 <View style={[{ flexDirection: 'col' }, styles.inputContainer]}>
-                    <Text style={{ color: '#666666' }}>Moods of the Week!</Text>
+                    <Text style={{ color: '#4A6080' }}>Moods of the Week!</Text>
 
                     <View style={styles.weekRow}>
                         {weekSlots.map((slot) => (
@@ -257,7 +257,7 @@ const AvatarPage = () => {
                             key={slot.dateKey}
                             style={[
                                 styles.weekSlot,
-                                { backgroundColor: slot.mood ? colorForMood(slot.mood) : 'white' },
+                                { backgroundColor: slot.mood ? colorForMood(slot.mood) : '#D0DAE8' },
                             ]}
                             />
                         ))}
@@ -329,7 +329,7 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 20,
         borderRadius: 30,
-        backgroundColor: '#DDDDDD',
+        backgroundColor: '#E0E9F1',
         width: '90%',
 
         alignItems: 'center',
@@ -340,16 +340,16 @@ const styles = StyleSheet.create({
 
     dailyEntryButton: {
         borderRadius: 20,
-        backgroundColor: '#BBBBBB',
+        backgroundColor: '#D0DAE8',
 
-        color: '#666666',
+        color: '#4A6080',
 
         justifyContent: 'center',
         alignItems: 'center',
     },
     
     statusText: {
-        color: '#666666',
+        color: '#4A6080',
         paddingBottom: 35,
     },
 
@@ -366,7 +366,7 @@ const styles = StyleSheet.create({
         height: 38,
         borderRadius: 10,
         borderWidth: 3,
-        borderColor: 'rgba(0,0,0,0.2)',
+        borderColor: 'rgba(74, 96, 128, 0.2)',
     },
 
     weekLabelsRow: {
@@ -382,6 +382,8 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 12,
         opacity: 0.6,
+
+        color: '#4A6080',
     },
 
 })

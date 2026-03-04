@@ -36,7 +36,7 @@ function Options({ onClose }) {
       <Pressable style={styles.backdrop} onPress={onClose} />
 
       <View style={styles.panel}>
-        <Octicons name='gear' size={35} color='#666666' style={[{ paddingBottom: 10, }]}/>
+        <Octicons name='gear' size={35} color='#4A6080' style={[{ paddingBottom: 10, }]}/>
 
         <TouchableOpacity onPress={handleSignOut} style={styles.button}>
           <Text style={styles.buttonText}>Sign Out</Text>
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
   panel: {
     width: '80%',
     borderRadius: 20,
-    backgroundColor: 'white',
+    backgroundColor: '#E0E9F1',
     alignItems: 'center',
     justifyContent: 'center',
 
@@ -74,14 +74,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
 
     borderRadius: 15,
-    backgroundColor: '#DDDDDD',
+    backgroundColor: '#D0DAE8',
     width: '50%',
     paddingVertical: 15,
 
     marginVertical: 5,
   },
   buttonText: {
-    color: '#666666',
+    color: '#4A6080',
     fontWeight: '600',
   },
 });
