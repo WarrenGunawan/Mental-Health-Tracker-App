@@ -12,7 +12,7 @@ function EntryListBox({ entry }) {
         color = '#8FE968';
     } else if(mood == 3) {
         color = '#FFEA56';
-    } else if(mood == 3) {
+    } else if(mood == 4) {
         color = '#FFB750';
     } else {
         color = '#FE797B';
