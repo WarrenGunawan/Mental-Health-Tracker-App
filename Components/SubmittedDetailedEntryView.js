@@ -1,108 +1,88 @@
-import { StyleSheet, Text, View, TouchableOpacity, TextInput, Pressable } from 'react-native';
-import { useState } from 'react';
-
-import Entypo from '@expo/vector-icons/Entypo';
+import { StyleSheet, Text, View, TouchableOpacity, Pressable, Animated } from 'react-native';
+import { useEffect, useRef } from 'react';
 
 
 
-function DetailedEntryView({ onClose, formattedDate, moodOptions, mood, notes }) {
+function SubmittedDetailedEntryView({ onClose, formattedDate, moodOptions, mood, notes }) {
 
-    const selectedValue = mood;
+    const backdropOpacity = useRef(new Animated.Value(0)).current;
+    const sheetTranslateY = useRef(new Animated.Value(600)).current;
+
+    useEffect(() => {
+        Animated.parallel([
+            Animated.timing(backdropOpacity, {
+                toValue: 1,
+                duration: 250,
+                useNativeDriver: true,
+            }),
+            Animated.spring(sheetTranslateY, {
+                toValue: 0,
+                damping: 20,
+                stiffness: 150,
+                useNativeDriver: true,
+            }),
+        ]).start();
+    }, []);
+
+    const close = () => {
+        Animated.parallel([
+            Animated.timing(backdropOpacity, {
+                toValue: 0,
+                duration: 200,
+                useNativeDriver: true,
+            }),
+            Animated.timing(sheetTranslateY, {
+                toValue: 600,
+                duration: 200,
+                useNativeDriver: true,
+            }),
+        ]).start(() => onClose());
+    };
+
+    const moodColor = moodOptions.find(o => o.value === mood)?.color ?? '#D0DAE8';
 
 
     return (
-        <View style={styles.detailedDailyEntryScreen}>
-            <Pressable style={styles.backdrop} onPress={onClose} />     
+        <View style={styles.screen}>
+            {/* Fading backdrop */}
+            <Animated.View style={[styles.backdrop, { opacity: backdropOpacity }]}>
+                <Pressable style={{ flex: 1 }} onPress={close} />
+            </Animated.View>
 
-            <View style={[{ backgroundColor: 'white', padding: 30, borderRadius: 30, justifyContent: 'center', alignItems: 'center'  }]}>     
-                <Text style={{fontSize: 45, marginBottom: 20  }}>{formattedDate} Entry</Text>
+            {/* Sliding content */}
+            <Animated.View style={{ transform: [{ translateY: sheetTranslateY }] }}>
+                <View style={styles.card}>
+                    <Text style={styles.title}>{formattedDate} Entry</Text>
 
-                <View style={[{ backgroundColor: 'rgba(0,0,0,0.5)', height: 3, width: 280, borderRadius: 3, marginBottom: 20}]}/>
+                    <View style={styles.divider} />
 
-                <Text style={[{ alignSelf: 'flex-start', marginBottom: 20, fontSize: 16 }]}>How are you Feeling?</Text>
-                <View style={styles.wrapper}>
-                    <View style={styles.grid}>
-                        {moodOptions.map((option) => {
-                            const hasSelection = selectedValue !== null;
-                            const isSelected = selectedValue === option.value;
+                    <Text style={styles.label}>Today's Mood</Text>
+                    <View style={[styles.moodSwatch, { backgroundColor: moodColor }]} />
 
-                        return (
-                        <TouchableOpacity
-                            key={option.id}
-                            disabled
-                            activeOpacity={0.9}
-                            style={[
-                            styles.circle,
-                            {
-                                backgroundColor: option.color,
-                                opacity: !hasSelection || isSelected ? 1 : 0.35,  // fade others
-                                borderWidth: isSelected ? 3 : 0,                  // border only selected
-                                borderColor: "rgba(0,0,0,0.15)",
-                                transform: [{ scale: isSelected ? 1.05 : 1 }],    // optional
-                            },
-                            ]}
-                        />
-                        )
-                        })}
+                    <Text style={styles.label}>Notes</Text>
+                    <View style={styles.notesBox}>
+                        <Text style={styles.notesText}>
+                            {notes && notes.trim() !== '' ? notes : 'No notes written for today.'}
+                        </Text>
                     </View>
-                </View>
 
-                <View style={styles.detailedDailyEntry}>
-                    <TextInput
-                        style={styles.textInputDailyEntry}
-                        value={notes ?? ""}
-                        editable={false}
-                        multiline
-                    />
+                    <TouchableOpacity onPress={close}>
+                        <Text style={styles.closeButton}>Close</Text>
+                    </TouchableOpacity>
                 </View>
-
-                <TouchableOpacity onPress={onClose}>
-                    <Text style={[styles.submitButtonOpposite, { padding: 10, fontSize: 20, fontWeight: 'bold', paddingHorizontal: 30, marginLeft: 5 }]}>Exit</Text>
-                </TouchableOpacity>
-            </View>
+            </Animated.View>
         </View>
-    )
+    );
 }
 
 
-const SIZE = 80;
-const GAP = 16;
-
 const styles = StyleSheet.create({
-    submitButtonOpposite: {
-        borderWidth: 5,
-        borderColor: '#DDDDDD',
-        borderRadius: 20,
-        backgroundColor: 'white',
-
-        color: '#666666',
-
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-
-    detailedDailyEntry: {
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-
-    detailedDailyEntryScreen: {
+    screen: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         ...StyleSheet.absoluteFillObject,
-    },
-
-    textInputDailyEntry: {
-        width: 250,
-        height: 100,
-        fontSize: 16,
-
-        padding: 10,
-        marginVertical: 30,
-
-        backgroundColor: '#DDDDDD',
-        borderRadius: 15,
+        zIndex: 10,
     },
 
     backdrop: {
@@ -110,24 +90,72 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0,0,0,0.7)',
     },
 
-    wrapper: {
-        alignItems: 'center',
-    },
-
-    grid: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        width: SIZE * 3 + GAP * 2, // EXACT width of 3 items
+    card: {
+        backgroundColor: '#F4F7FA',
+        padding: 30,
+        borderRadius: 30,
         justifyContent: 'center',
-        gap: GAP,
+        alignItems: 'center',
+        width: 320,
     },
 
-    circle: {
-        width: SIZE,
-        height: SIZE,
-        borderRadius: SIZE / 4,
+    title: {
+        fontSize: 38,
+        marginBottom: 20,
+        color: '#4A6080',
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
+
+    divider: {
+        height: 3,
+        width: 260,
+        borderRadius: 3,
+        marginBottom: 20,
+        backgroundColor: '#4A6080',
+    },
+
+    label: {
+        alignSelf: 'flex-start',
+        fontSize: 16,
+        color: '#4A6080',
+        marginBottom: 10,
+    },
+
+    moodSwatch: {
+        width: 60,
+        height: 60,
+        borderRadius: 15,
+        borderWidth: 3,
+        borderColor: 'rgba(0,0,0,0.15)',
+        marginBottom: 20,
+        alignSelf: 'flex-start',
+    },
+
+    notesBox: {
+        backgroundColor: '#D0DAE8',
+        borderRadius: 15,
+        padding: 14,
+        width: '100%',
+        minHeight: 80,
+        marginBottom: 24,
+    },
+
+    notesText: {
+        fontSize: 16,
+        color: '#4A6080',
+    },
+
+    closeButton: {
+        borderRadius: 20,
+        backgroundColor: '#D0DAE8',
+        color: '#4A6080',
+        fontSize: 20,
+        fontWeight: 'bold',
+        paddingVertical: 15,
+        paddingHorizontal: 50,
     },
 });
 
 
-export default DetailedEntryView;
+export default SubmittedDetailedEntryView;

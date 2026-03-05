@@ -1,14 +1,23 @@
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { useState, useEffect } from 'react';
 
 import { db, auth } from '../firebase.js';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+
 import Wooper from '../assets/images/wooper.png';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import EditProfileView from './EditProfileView.js';
+
 
 const ProfileView = () => {
+    const [ edit, setEdit ] = useState();
+
+
+
+
     const uid = auth.currentUser.uid;
     const PFP_KEY = `pfp:${uid}`;
 
@@ -53,8 +62,12 @@ const ProfileView = () => {
     }, []);
 
 
+
     return (
         <View style={styles.profileContainer}>
+            <TouchableOpacity style={styles.editButton} onPress={() => {setEdit(true)}}>
+                <MaterialCommunityIcons  name='account-edit-outline' size={30} color='#4A6080' />
+            </TouchableOpacity>
             <Image
                 source={pfpUri ? { uri: pfpUri } : Wooper}
                 style={styles.pfp}/>
@@ -70,6 +83,12 @@ const ProfileView = () => {
 
                 <View style={[{ backgroundColor: '#4A6080', height: 3, width: '80%', borderRadius: 3 }]}/>
             </View>
+
+
+            {edit && (
+                <EditProfileView onClose={() => {setEdit(false)}} />
+            )}
+
         </View>
     )
 }
@@ -131,8 +150,15 @@ const styles = StyleSheet.create({
     aboutMe: {
         fontSize: 20,
         padding: 20,
-        color: '#4A6080'
-,    },
+        color: '#4A6080',
+    },
+
+    editButton: {
+        position: 'absolute',
+        margin: 20,
+        right: 0,
+        
+    },
 })
 
 
