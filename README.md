@@ -1,6 +1,6 @@
 # 🧠 InnerHue
 
-> <One-line description of your app — e.g., A social mental health tracker that helps users reflect, connect, and stay consistent>
+A social mental health tracker that helps users reflect, connect, and stay consistent
 
 ---
 
