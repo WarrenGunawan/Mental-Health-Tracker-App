@@ -112,32 +112,26 @@ I built InnerHue because I wanted a simple and meaningful way for myself and tho
 ## ⚙️ Tech Stack
 
 ### 📱 Frontend
-- <Framework (e.g., React Native with Expo)>
-- <Language (JavaScript / TypeScript)>
-- <State management (if applicable)>
+- React Native with Expo
+- Javascipt/Typescript
 
 ### 🔥 Backend / Services
-- <Database (e.g., Firebase Firestore)>
-- <Authentication (if used)>
-- <Storage (e.g., Firebase Storage for images)>
+- Firebase Firestore
+- Firebase Authentication
 
 ### 🛠️ Tools & Development
-- Git & GitHub
 - Expo Go
-- <Code editor (e.g., VS Code)>
-- <Any libraries worth mentioning>
+- VS Code
 
 ---
 
 ## 🔮 Future Improvements
 
-- <Feature improvement — e.g., Push notifications for daily check-ins>
-- <UX improvement — e.g., smoother animations / transitions>
-- <Feature expansion — e.g., comments or reactions on friends’ entries>
-- <Analytics improvement — e.g., weekly/monthly mood insights>
-- <Scalability — e.g., backend optimization or caching>
-
-> <Optional: One sentence about your vision for the app’s future>
+- Editable daily entries until the day has ended
+- Attach picture functionality to daily entries
+- View friend's profiles and entry notes
+- Cleaner/Smoother UX and UI
+- Processing user entered data to develop mood trends
 
 ---
 
