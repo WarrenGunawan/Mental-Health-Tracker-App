@@ -109,6 +109,55 @@ I built InnerHue because I wanted a simple and meaningful way for myself and tho
 
 ---
 
+## ⚙️ Tech Stack
+
+### 📱 Frontend
+- <Framework (e.g., React Native with Expo)>
+- <Language (JavaScript / TypeScript)>
+- <State management (if applicable)>
+
+### 🔥 Backend / Services
+- <Database (e.g., Firebase Firestore)>
+- <Authentication (if used)>
+- <Storage (e.g., Firebase Storage for images)>
+
+### 🛠️ Tools & Development
+- Git & GitHub
+- Expo Go
+- <Code editor (e.g., VS Code)>
+- <Any libraries worth mentioning>
+
+---
+
+## 🔮 Future Improvements
+
+- <Feature improvement — e.g., Push notifications for daily check-ins>
+- <UX improvement — e.g., smoother animations / transitions>
+- <Feature expansion — e.g., comments or reactions on friends’ entries>
+- <Analytics improvement — e.g., weekly/monthly mood insights>
+- <Scalability — e.g., backend optimization or caching>
+
+> <Optional: One sentence about your vision for the app’s future>
+
+---
+
+## 📦 Installation
+
+```bash
+# Clone the repository
+git clone <YOUR_REPO_LINK>
+
+# Navigate into the project directory
+cd <PROJECT_NAME>
+
+# Install dependencies
+npm install
+
+# Start the development server
+npx expo start
+
+---
+
 ## 🏗️ App Structure
 
 ```bash
