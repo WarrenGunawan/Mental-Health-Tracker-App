@@ -31,8 +31,8 @@ I built InnerHue because I wanted a simple and meaningful way for myself and tho
   <img src="./Screenshots/Main.png" width="250"/>
 </p>
 
-- <Briefly explain what happens on this screen>
-- <Mood tracking / quick access / daily interaction>
+- Enter experienced mood and any additional notes for today
+- Information is locked oncec submitted and can be reopened to see what was entered
 
 ---
 
@@ -41,9 +41,9 @@ I built InnerHue because I wanted a simple and meaningful way for myself and tho
   <img src="./Screenshots/Calendar.png" width="250"/>
 </p>
 
-- Visual overview of mood history
+- Visual overview of one's monthly mood history
 - Color-coded entries for quick insights
-- <Anything else>
+- Shifting window to view past monthly entries and future months to come
 
 ---
 
@@ -53,8 +53,7 @@ I built InnerHue because I wanted a simple and meaningful way for myself and tho
 </p>
 
 - Users can view past entries
-- Supports detailed reflections
-- <Anything else>
+- Supports detailed reflections and note taking 
 
 ---
 
@@ -65,7 +64,7 @@ I built InnerHue because I wanted a simple and meaningful way for myself and tho
 
 - View friends' weekly mood activity
 - Encourages accountability and connection
-- <Anything else>
+- Friend others based off of username
 
 ---
 
@@ -77,7 +76,6 @@ I built InnerHue because I wanted a simple and meaningful way for myself and tho
 
 - Custom profile with avatar and bio
 - Editable user information
-- <Anything else>
 
 ---
 
@@ -88,7 +86,7 @@ I built InnerHue because I wanted a simple and meaningful way for myself and tho
 
 - Accept or decline requests
 - Manage social connections
-- <Anything else>
+- Notified when a request is sent to the user
 
 ---
 
@@ -108,7 +106,6 @@ I built InnerHue because I wanted a simple and meaningful way for myself and tho
 ### Additional Features
 - Profile customization
 - Avatar selection
-- <Anything else you added>
 
 ---
 
