@@ -151,13 +151,3 @@ npm install
 npx expo start
 
 ```
-
-## 🏗️ App Structure
-
-```bash
-/app
-  /components     # Reusable UI components
-  /screens        # Main screens (Home, Calendar, Friends, Profile)
-  /services       # Firebase / API logic
-  /hooks          # Custom hooks
-  /utils          # Helper functions
