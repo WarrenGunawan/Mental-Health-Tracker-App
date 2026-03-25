@@ -14,23 +14,13 @@ A social mental health tracker that helps users reflect, connect, and stay consi
 
 ## ✨ Overview
 
-<Write 2–4 sentences about your app>
-
-- What problem does it solve?
-- Who is it for?
-- What makes it unique?
-
-Example:
-> InnerHue is a mental health tracking app that allows users to log daily moods, reflect through journaling, and stay connected with friends. It combines self-reflection with social accountability to encourage consistency and awareness.
+InnerHue is a mental health tracking app that allows users to log daily moods and reflect through journaling. It includes friending capabilites to promote connection with friends and openness with ones mental health. It combines self-reflection with social accountability to encourage consistency and awareness.
 
 ---
 
 ## 💡 Why I Built This
 
-<Make this personal — this is important>
-
-Example:
-> I built InnerHue because I wanted a simple and meaningful way to stay consistent with reflecting on my mental health. Many apps felt too complex or isolating, so I wanted to create something that was both minimal and social, making it easier to stay accountable and connected.
+I built InnerHue because I wanted a simple and meaningful way for myself and those close to me to stay consistent with reflecting on my mental health. Many apps felt too complex or isolating, so I wanted to create something that was both minimal and social, making it easier to stay accountable and connected. 
 
 ---
 
