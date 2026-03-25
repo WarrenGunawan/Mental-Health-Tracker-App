@@ -1,6 +1,6 @@
 # 🧠 InnerHue
 
-A social mental health tracker that helps users reflect, connect, and stay consistent
+A social mental health tracker that helps users reflect, connect, and stay consistent in documenting their mental health
 
 ---
 
