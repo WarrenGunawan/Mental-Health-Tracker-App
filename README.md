@@ -156,7 +156,7 @@ npm install
 # Start the development server
 npx expo start
 
----
+```
 
 ## 🏗️ App Structure
 
